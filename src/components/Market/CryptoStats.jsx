@@ -1,7 +1,5 @@
 import React from 'react';
-import millify from 'millify';
 import { useGetMarketCapQuery } from '../../services/marketCapApi';
-import { useGetMarketStatsQuery } from '../../services/cryptoApi';
 
 import DomStats from './DomStats';
 import Loader from '../Loader';
@@ -9,22 +7,40 @@ import { numberWithCommas } from '../../pages/Market';
 
 import { Box, Grid, Typography, Paper, styled } from '@mui/material';
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: '#f3f4f6',
+export const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(1),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
     borderRadius: '10px',
     boxShadow: 'none',
+    borderLeft: '10px solid',
+    borderLeftColor: theme.palette.primary.main,
+}));
+
+export const Heading = styled(Typography)(({ theme }) => ({
+    ...theme.typography.subtitle1,
+    alignItems: 'center',
+    fontSize: '16px',
+    fontWeight: '500',
+    color: theme.palette.text.secondary,
+}));
+
+export const StatsBody = styled(Typography)(({ theme }) => ({
+    ...theme.typography.body1,
+    alignItems: 'center',
+    fontSize: '20px',
+    fontWeight: '500',
+    marginTop: '10px',
+    color: theme.palette.text.primary,
 }));
 
 const CryptoStats = () => {
-    const { data, isFetching } = useGetMarketCapQuery(10);
+    const { data } = useGetMarketCapQuery(10);
 
     if (!data) return <Loader />;
 
     const globalStats = data.data.stats;
-    console.log(data);
 
     return (
         <Box sx={{ mt: '24px', flexGrow: 1 }}>
@@ -46,44 +62,18 @@ const CryptoStats = () => {
             >
                 <Grid item xs={12} sm={4} md={3}>
                     <Item>
-                        <Typography
-                            variant="subtitle1"
-                            alignItems="center"
-                            fontSize="16px"
-                            fontWeight="400"
-                        >
-                            Total Market Cap
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            alignItems="center"
-                            fontSize="20px"
-                            fontWeight="500"
-                            mt="10px"
-                        >
+                        <Heading>Total Market Cap</Heading>
+                        <StatsBody>
                             $ {numberWithCommas(globalStats.totalMarketCap)}
-                        </Typography>
+                        </StatsBody>
                     </Item>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3}>
                     <Item>
-                        <Typography
-                            variant="subtitle1"
-                            alignItems="center"
-                            fontSize="16px"
-                            fontWeight="400"
-                        >
-                            24h Trading Volume
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            alignItems="center"
-                            fontSize="20px"
-                            fontWeight="500"
-                            mt="10px"
-                        >
+                        <Heading>24h Trading Volume</Heading>
+                        <StatsBody>
                             $ {numberWithCommas(globalStats.total24hVolume)}
-                        </Typography>
+                        </StatsBody>
                     </Item>
                 </Grid>
                 <DomStats />

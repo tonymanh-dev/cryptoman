@@ -1,10 +1,10 @@
-import React from 'react'
-import { Box, Typography, Grid, Stack } from '@mui/material'
-import { Item } from './index'
+import React from 'react';
+import { Box, Typography, Grid, Stack } from '@mui/material';
+import { Item } from './index';
 
 const PortfolioStats = () => {
     return (
-        <Stack m="24px" height="230px">
+        <Stack m="24px" height="230px" color="text.primary">
             <Typography variant="h6" fontSize="16px">
                 Portfolio Stats
             </Typography>
@@ -19,7 +19,7 @@ const PortfolioStats = () => {
                 </Grid>
             </Box>
         </Stack>
-    )
-}
+    );
+};
 
-export default PortfolioStats
+export default PortfolioStats;

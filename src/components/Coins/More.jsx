@@ -26,7 +26,7 @@ const More = ({ coin }) => {
         a: { textDecoration: 'none', color: theme.palette.primary.main },
     }));
 
-    const ShadowContent = styled(Box)(() => ({
+    const ShadowContent = styled(Box)(({ theme }) => ({
         content: '""',
         position: 'absolute',
         left: '0px',
@@ -34,7 +34,9 @@ const More = ({ coin }) => {
         width: '100%',
         height: '8em',
         background:
-            'linear-gradient(180deg, rgba(255,255,255,0.123) 30%, rgba(243,243,243,0.9) 60%)',
+            theme.palette.mode === 'light'
+                ? 'linear-gradient(180deg, rgba(255,255,255,0.123) 30%, rgba(255,255,255,0.9) 60%)'
+                : 'linear-gradient(180deg, rgba(0,0,0,0.123) 46%, rgba(18,18,18,0.9) 60%)',
     }));
 
     return (

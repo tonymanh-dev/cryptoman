@@ -1,21 +1,20 @@
-import * as React from 'react'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import MenuItem from '@mui/material/MenuItem'
-import { Avatar, Button, Typography } from '@mui/material'
-import TimePicker from './TimePicker'
+import React from 'react';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import { Avatar, Button, Typography } from '@mui/material';
+import TimePicker from './TimePicker';
 
-import { account1 } from '../../data/dummy'
-import { useState } from 'react'
+import { portfolio } from '../../data/dummy';
+import { useState } from 'react';
 
-const porfolio = account1.map((coin) => coin.portfolio)
-const coins = porfolio[0].map((coin) => {
+const coins = portfolio.map((coin) => {
     return {
         value: coin.symbol,
         label: coin.coin,
         image: coin.image,
-    }
-})
+    };
+});
 
 const transfers = [
     {
@@ -26,7 +25,7 @@ const transfers = [
         value: 'IN',
         label: 'Transfer in',
     },
-]
+];
 
 const formStyle = {
     '& .MuiOutlinedInput-root': {
@@ -39,7 +38,7 @@ const formStyle = {
             borderColor: 'primary.main',
         },
     },
-}
+};
 const styleFormFilled = {
     '& .MuiFilledInput-root': {
         borderRadius: '10px',
@@ -63,26 +62,26 @@ const styleFormFilled = {
     '& .MuiFilledInput-root:hover:not(.Mui-disabled):after': {
         borderBottom: 'none',
     },
-}
+};
 
 const titleForm = {
     fontWeight: '500',
     fontSize: '14px',
-}
+};
 
 export default function SelectTextFields({ currentCoin }) {
-    const [coin, setCoin] = React.useState('BTC')
-    const [transfer, setTransfer] = useState('IN')
+    const [coin, setCoin] = useState('BTC');
+    const [transfer, setTransfer] = useState('IN');
 
-    console.log(currentCoin)
+    console.log(currentCoin);
 
     const handleChange = (e) => {
-        setCoin(e.target.value)
-    }
+        setCoin(e.target.value);
+    };
 
     const handleChangeTransfer = (e) => {
-        setTransfer(e.target.value)
-    }
+        setTransfer(e.target.value);
+    };
 
     return (
         <Box
@@ -177,5 +176,5 @@ export default function SelectTextFields({ currentCoin }) {
                 Add Transaction
             </Button>
         </Box>
-    )
+    );
 }

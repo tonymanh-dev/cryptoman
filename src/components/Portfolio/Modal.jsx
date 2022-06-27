@@ -1,58 +1,58 @@
-import React, { useState, useContext } from 'react'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
-import AddIcon from '@mui/icons-material/Add'
-import Tab from '@mui/material/Tab'
-import TabContext from '@mui/lab/TabContext'
-import TabList from '@mui/lab/TabList'
-import TabPanel from '@mui/lab/TabPanel'
-import CloseIcon from '@mui/icons-material/Close'
+import React, { useState, useContext } from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import AddIcon from '@mui/icons-material/Add';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import CloseIcon from '@mui/icons-material/Close';
+import { styled } from '@mui/material';
 
-import Form from './Form'
-import Transfer from './Transfer'
+import Form from './Form';
+import Transfer from './Transfer';
 
 // Custom style MUI
 
-const style = {
+const BoxStyled = styled(Box)(({ theme }) => ({
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 500,
     height: '550px',
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
+    padding: '24px',
+    boxShadow: theme.shadows[4],
     borderRadius: '10px',
-}
+    backgroundColor: theme.palette.background.default,
+}));
 
-const btnStyle = {
-    width: 160,
-    height: 40,
-    borderRadius: '30px',
-}
-
-const styleTab = {
+const TabStyled = styled(Tab)(() => ({
     fontWeight: '500',
     fontSize: '14px',
-}
+}));
+
+const TabPanelStyled = styled(TabPanel)(() => ({
+    margin: '20px',
+    padding: '0',
+}));
 
 // Main function Modal
 const ModalForm = ({ currentCoin, currentPrice }) => {
-    const [open, setOpen] = useState(false)
-    const [value, setValue] = useState('BUY')
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState('BUY');
 
     // Handle action Open/Close Modal
-    const handleOpen = () => setOpen(true)
+    const handleOpen = () => setOpen(true);
 
-    const handleClose = () => setOpen(false)
+    const handleClose = () => setOpen(false);
 
     // Handle tab action Buy, Sell, Transfer
     const handleChangeAction = (e, newAction) => {
-        setValue(newAction)
-    }
+        setValue(newAction);
+    };
 
     return (
         <div>
@@ -65,7 +65,7 @@ const ModalForm = ({ currentCoin, currentPrice }) => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
+                <BoxStyled>
                     <Box
                         sx={{
                             display: 'flex',
@@ -82,6 +82,7 @@ const ModalForm = ({ currentCoin, currentPrice }) => {
                                 minWidth: '32px',
                                 justifyContent: 'center',
                             }}
+                            onClick={handleClose}
                         >
                             <CloseIcon />
                         </Button>
@@ -103,62 +104,32 @@ const ModalForm = ({ currentCoin, currentPrice }) => {
                                         },
                                     }}
                                 >
-                                    <Tab
-                                        sx={styleTab}
-                                        label="BUY"
-                                        value="BUY"
-                                    />
-                                    <Tab
-                                        sx={styleTab}
-                                        label="SELL"
-                                        value="SELL"
-                                    />
-                                    <Tab
-                                        sx={styleTab}
+                                    <TabStyled label="BUY" value="BUY" />
+                                    <TabStyled label="SELL" value="SELL" />
+                                    <TabStyled
                                         label="TRANSFER"
                                         value="TRANSFER"
                                     />
                                 </TabList>
                             </Box>
-                            <TabPanel
-                                sx={{
-                                    mt: '20px',
-                                    padding: '0px',
-                                }}
-                                value="BUY"
-                            >
-                                <Form
-                                    currentPrice={currentPrice}
-                                    currentCoin={currentCoin}
-                                />
-                            </TabPanel>
-                            <TabPanel
-                                sx={{
-                                    mt: '20px',
-                                    padding: '0',
-                                }}
-                                value="SELL"
-                            >
-                                <Form
-                                    currentPrice={currentPrice}
-                                    currentCoin={currentCoin}
-                                />
-                            </TabPanel>
-                            <TabPanel
-                                sx={{
-                                    mt: '20px',
-                                    padding: '0',
-                                }}
-                                value="TRANSFER"
-                            >
-                                <Transfer currentCoin={currentCoin} />
-                            </TabPanel>
+                            {['BUY', 'SELL', 'TRANSFER'].map((action) => (
+                                <TabPanelStyled value={action} key={action}>
+                                    {action === 'TRANSFER' ? (
+                                        <Transfer currentCoin={currentCoin} />
+                                    ) : (
+                                        <Form
+                                            currentPrice={currentPrice}
+                                            currentCoin={currentCoin}
+                                        />
+                                    )}
+                                </TabPanelStyled>
+                            ))}
                         </TabContext>
                     </Box>
-                </Box>
+                </BoxStyled>
             </Modal>
         </div>
-    )
-}
+    );
+};
 
-export default ModalForm
+export default ModalForm;

@@ -1,17 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { CoinsContext } from '../../services/CryptoApiContext'
+import React, { useState, useEffect, useContext } from 'react';
+import { CoinsContext } from '../../services/CryptoApiContext';
 
-import { Box, Paper, Grid, Typography, styled } from '@mui/material'
+import { Box, Paper, Grid, Typography, styled } from '@mui/material';
 
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
+    backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     borderRadius: '10px',
     boxShadow: 'none',
-}))
+}));
 
 const Overview = () => {
     return (
@@ -58,7 +57,9 @@ const Overview = () => {
                             fontSize="20px"
                             fontWeight="500"
                             mt="10px"
-                        ></Typography>
+                        >
+                            $ 102.836.99
+                        </Typography>
                     </Item>
                 </Grid>
                 <Grid item xs={2} sm={4} md={3}>
@@ -105,7 +106,7 @@ const Overview = () => {
                 </Grid>
             </Grid>
         </Box>
-    )
-}
+    );
+};
 
-export default Overview
+export default Overview;

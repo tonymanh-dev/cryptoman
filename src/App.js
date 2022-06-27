@@ -1,24 +1,34 @@
-import React, { useState } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { CoinsContext } from './services/CryptoApiContext';
 
 import './App.css';
-import theme from './theme';
+import customPalette from './palette';
 import Dashboard from './pages/Dashboard';
 import Portfolio from './pages/Portfolio';
 import Market from './pages/Market';
 import CoinPage from './pages/CoinPage';
 
-import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
-import { Box, Stack, Container, ThemeProvider } from '@mui/material';
+import Navbar from './components/Navbar/Navbar';
+import Sidebar from './components/SideBar/Sidebar';
+import {
+    Box,
+    Container,
+    ThemeProvider,
+    createTheme,
+    CssBaseline,
+} from '@mui/material';
 
 export const App = () => {
-    const [mode, setMode] = useState('light');
+    const { mode } = useContext(CoinsContext);
+
+    const theme = useMemo(() => createTheme(customPalette(mode)), [mode]);
 
     return (
         <BrowserRouter>
             <ThemeProvider theme={theme}>
-                <Box>
+                <CssBaseline />
+                <Box bgcolor="background.default">
                     <Navbar />
 
                     <Container
@@ -27,18 +37,11 @@ export const App = () => {
                             display: 'flex',
                             flexDirection: 'row',
                             mt: '64px',
-                            background: '#fff',
+                            backgroundColor: 'background.default',
                         }}
                     >
-                        <Box
-                            sx={{
-                                minWidth: '174px',
-                                backgroundColor: '#fff',
-                                display: { xs: 'none', lg: 'block' },
-                            }}
-                        >
-                            <Sidebar />
-                        </Box>
+                        {<Sidebar />}
+
                         <Routes>
                             <Route path="" element={<Market />} />
                             <Route path="/dashboard" element={<Dashboard />} />

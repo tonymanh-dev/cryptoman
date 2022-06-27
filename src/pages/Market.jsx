@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetCryptosQuery } from '../services/cryptoApi';
+import { FaRegStar, FaStar } from 'react-icons/fa';
 
 import Loader from '../components/Loader';
 import CryptoStats from '../components/Market/CryptoStats';
@@ -18,17 +19,15 @@ import {
     Table,
     TableBody,
     Avatar,
-    Pagination,
-    IconButton,
     styled,
+    Pagination,
 } from '@mui/material';
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
 
-export function numberWithCommas(number) {
+export const numberWithCommas = (number) => {
     if (!number) return '--';
 
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
+};
 
 const Market = () => {
     const [page, setPage] = useState(1);
@@ -46,21 +45,48 @@ const Market = () => {
     //     );
     // };
     const Container = styled(Box)(({ theme }) => ({
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('lg')]: {
             marginLeft: '0',
         },
     }));
 
+    const TableCellStyled = styled(TableCell)(({ theme }) => ({
+        borderBottom: '1px solid',
+        borderBottomColor: theme.palette.divider,
+    }));
+
+    const TypoStyled = styled(Typography)(({ theme }) => ({
+        ...theme.typography.subtitle1,
+        fontWeight: '500',
+    }));
+
     return (
-        <Box sx={{ ml: '24px', width: '100%' }}>
+        <Container sx={{ marginLeft: '24px', width: '100%' }}>
             <CryptoStats />
-            <TableContainer component={Paper} sx={{ mt: '34px' }}>
+
+            <TableContainer
+                component={Paper}
+                sx={{
+                    mt: '34px',
+                    '.MuiTable-root': {
+                        backgroundColor: 'background.default',
+                    },
+                    boxShadow: 'none',
+                }}
+            >
                 {isFetching ? (
                     <LinearProgress sx={{ width: '100%', color: 'primary' }} />
                 ) : (
-                    <Table aria-label="simple table">
+                    <Table
+                        aria-label="simple table"
+                        sx={{
+                            '.MuiTableHead-root': {
+                                backgroundColor: 'background.paper',
+                            },
+                        }}
+                    >
                         <TableHead>
-                            <TableRow>
+                            <TableRow hover>
                                 {[
                                     '#',
                                     'Coin',
@@ -84,6 +110,7 @@ const Market = () => {
                             </TableRow>
                         </TableHead>
 
+                        {/* Table Row */}
                         <TableBody>
                             {data
                                 .slice((page - 1) * 20, (page - 1) * 20 + 20)
@@ -96,38 +123,38 @@ const Market = () => {
                                             key={coin.name}
                                             sx={{
                                                 '&:hover': {
-                                                    backgroundColor: '#f2f2f2',
+                                                    backgroundColor:
+                                                        'background.paper',
                                                 },
                                             }}
                                         >
-                                            <TableCell
+                                            <TableCellStyled
                                                 component="th"
                                                 scope="row"
                                                 align="right"
                                             >
                                                 <Box
-                                                    style={{
+                                                    sx={{
                                                         display: 'flex',
                                                         alignItems: 'center',
-                                                        justifyContent:
-                                                            'center',
-                                                        gap: '0',
+                                                        gap: '8px',
                                                     }}
                                                 >
-                                                    <IconButton>
-                                                        <StarOutlineIcon
-                                                            sx={{
-                                                                height: '20px',
-                                                                width: '20px',
-                                                            }}
-                                                        />
-                                                    </IconButton>
-                                                    <Typography variant="subtitle1">
+                                                    {/* Handle click favorite coin  */}
+                                                    <FaRegStar
+                                                        style={{
+                                                            height: '16px',
+                                                            width: '16px',
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        onClick={() => {}}
+                                                    />
+                                                    <TypoStyled>
                                                         {coin.market_cap_rank}
-                                                    </Typography>
+                                                    </TypoStyled>
                                                 </Box>
-                                            </TableCell>
-                                            <TableCell
+                                            </TableCellStyled>
+                                            <TableCellStyled
                                                 align="right"
                                                 onClick={() =>
                                                     navigate(
@@ -153,32 +180,30 @@ const Market = () => {
                                                             mr: '10px',
                                                         }}
                                                     />
-                                                    <Typography
-                                                        variant="subtitle1"
-                                                        fontWeight="500"
-                                                    >
+                                                    <TypoStyled>
                                                         {coin.name}
-                                                    </Typography>
+                                                    </TypoStyled>
                                                 </Box>
-                                            </TableCell>
-                                            <TableCell align="left">
-                                                <Typography variant="subtitle1">
+                                            </TableCellStyled>
+                                            <TableCellStyled align="left">
+                                                <TypoStyled
+                                                    sx={{ fontSize: '14px' }}
+                                                >
                                                     {coin.symbol.toUpperCase()}
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                <Typography variant="subtitle1">
+                                                </TypoStyled>
+                                            </TableCellStyled>
+                                            <TableCellStyled align="right">
+                                                <TypoStyled>
                                                     ${' '}
                                                     {numberWithCommas(
                                                         coin.current_price.toFixed(
                                                             2,
                                                         ),
                                                     )}
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                <Typography
-                                                    variant="subtitle1"
+                                                </TypoStyled>
+                                            </TableCellStyled>
+                                            <TableCellStyled align="right">
+                                                <TypoStyled
                                                     sx={{
                                                         color: priceUp
                                                             ? 'rgb(14, 203, 129)'
@@ -190,24 +215,24 @@ const Market = () => {
                                                         2,
                                                     )}
                                                     %
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                <Typography variant="subtitle1">
+                                                </TypoStyled>
+                                            </TableCellStyled>
+                                            <TableCellStyled align="right">
+                                                <TypoStyled>
                                                     ${' '}
                                                     {numberWithCommas(
                                                         coin.total_volume.toFixed(),
                                                     )}
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                <Typography variant="subtitle1">
+                                                </TypoStyled>
+                                            </TableCellStyled>
+                                            <TableCellStyled align="right">
+                                                <TypoStyled>
                                                     ${' '}
                                                     {numberWithCommas(
                                                         coin.market_cap,
                                                     )}
-                                                </Typography>
-                                            </TableCell>
+                                                </TypoStyled>
+                                            </TableCellStyled>
                                         </TableRow>
                                     );
                                 })}
@@ -217,10 +242,11 @@ const Market = () => {
             </TableContainer>
 
             <Pagination
+                selected={true}
                 count={5}
                 onChange={(_, value) => {
                     setPage(value);
-                    window.scroll(0, 450);
+                    window.scroll(0, 200);
                 }}
                 color="primary"
                 size="large"
@@ -229,9 +255,15 @@ const Market = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     m: '24px',
+                    '.MuiPaginationItem-root': {
+                        fontWeight: '500',
+                        '&.Mui-selected': {
+                            color: '#fff',
+                        },
+                    },
                 }}
             />
-        </Box>
+        </Container>
     );
 };
 

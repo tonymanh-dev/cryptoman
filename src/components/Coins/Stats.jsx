@@ -4,45 +4,68 @@ import { numberWithCommas } from '../../pages/Market';
 import { Box, Grid, Paper, styled, Tooltip, Typography } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
-const Stats = ({
-    totalSupply,
-    marketCap,
-    circulatingSupply,
-    fullyDilutedValuation,
-    totalVolume,
-    maxSupply,
-}) => {
-    const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#f3f3f3',
-        ...theme.typography.body2,
-        padding: '12px 0',
-        color: theme.palette.text.secondary,
-        borderRadius: '0',
-        boxShadow: 'none',
-        borderBottom: '1px solid #e5e7eb',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    }));
+const Item = styled(Paper)(({ theme }) => ({
+    padding: '12px 0',
+    color: theme.palette.text.secondary,
+    borderRadius: '0',
+    boxShadow: 'none',
+    borderBottom: '1px solid',
+    borderBottomColor: theme.palette.divider,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'transparent',
+    backgroundImage: 'none',
+}));
 
-    const Heading = styled(Typography)(({ theme }) => ({
-        fontSize: '14px',
-        fontWeight: '400',
-    }));
+const Heading = styled(Typography)(() => ({
+    fontSize: '14px',
+    fontWeight: '500',
+}));
 
-    const Subtitle = styled(Typography)(({ theme }) => ({
-        fontSize: '14px',
-        fontWeight: '500',
-        color: theme.palette.text.primary,
-    }));
+const Subtitle = styled(Typography)(({ theme }) => ({
+    fontSize: '14px',
+    fontWeight: '500',
+    color: theme.palette.text.primary,
+}));
 
-    const InfoCustom = styled(HelpOutlineIcon)(({ theme }) => ({
-        fontSize: '14px',
-        marginLeft: '4px',
-    }));
+const InfoIcon = styled(HelpOutlineIcon)(() => ({
+    fontSize: '14px',
+    marginLeft: '4px',
+}));
 
-    const marketCapToolTip =
-        "Market Cap = Current Price x Circulating Supply Refers to the total market value of a cryptocurrency's circulating supply. It is similar to the stock market’s measurement of multiplying price per share by shares readily available in the market (not held & locked by insiders, governments)";
+const marketCapToolTip =
+    "Market Cap = Current Price x Circulating Supply Refers to the total market value of a cryptocurrency's circulating supply.)";
+
+const Stats = ({ data }) => {
+    const coinStats = [
+        {
+            title: 'Market Cap',
+            value: numberWithCommas(data.market_data.market_cap.usd),
+        },
+        {
+            title: 'Fully Diluted Market Cap',
+            value: numberWithCommas(
+                data.market_data.fully_diluted_valuation.usd,
+            ),
+        },
+        {
+            title: '24 Hour Trading Vol',
+            value: numberWithCommas(data.market_data.total_volume.usd),
+        },
+        {
+            title: 'Circulating Supply',
+            value: numberWithCommas(data.market_data.circulating_supply),
+        },
+        {
+            title: 'Total Supply',
+            value: numberWithCommas(data.market_data.total_supply),
+        },
+        {
+            title: 'Max Supply',
+            value: numberWithCommas(data.market_data.max_supply),
+        },
+    ];
 
     return (
         <Grid container sx={{ m: '24px 0' }}>
@@ -57,72 +80,19 @@ const Stats = ({
                         },
                     }}
                 >
-                    <Item>
-                        <Heading>
-                            Market Cap
-                            <Tooltip title={marketCapToolTip}>
-                                <InfoCustom />
-                            </Tooltip>
-                        </Heading>
-                        <Subtitle>${numberWithCommas(marketCap)}</Subtitle>
-                    </Item>
-                    <Item>
-                        <Heading>
-                            Fully Diluted Market Cap
-                            <Tooltip title={marketCapToolTip}>
-                                <InfoCustom />
-                            </Tooltip>
-                        </Heading>
-                        <Subtitle>
-                            {fullyDilutedValuation && '$'}{' '}
-                            {numberWithCommas(fullyDilutedValuation)}
-                        </Subtitle>
-                    </Item>
-                    <Item>
-                        <Heading>
-                            24 Hour Trading Vol
-                            <Tooltip title={marketCapToolTip}>
-                                <InfoCustom />
-                            </Tooltip>
-                        </Heading>
-                        <Subtitle>${numberWithCommas(totalVolume)}</Subtitle>
-                    </Item>
-                    <Item>
-                        <Heading>
-                            Circulating Supply
-                            <Tooltip title={marketCapToolTip}>
-                                <InfoCustom />
-                            </Tooltip>
-                        </Heading>
-                        <Subtitle>
-                            {circulatingSupply && '$'}
-                            {numberWithCommas(circulatingSupply)}
-                        </Subtitle>
-                    </Item>
-                    <Item>
-                        <Heading>
-                            Total Supply
-                            <Tooltip title={marketCapToolTip}>
-                                <InfoCustom />
-                            </Tooltip>
-                        </Heading>
-                        <Subtitle>
-                            {totalSupply && '$'}
-                            {numberWithCommas(totalSupply)}
-                        </Subtitle>
-                    </Item>
-                    <Item>
-                        <Heading>
-                            Max Supply
-                            <Tooltip title={marketCapToolTip}>
-                                <InfoCustom />
-                            </Tooltip>
-                        </Heading>
-                        <Subtitle>
-                            {maxSupply && '$'}
-                            {numberWithCommas(maxSupply)}
-                        </Subtitle>
-                    </Item>
+                    {coinStats.map((coin) => (
+                        <Item key={coin.title}>
+                            <Heading>
+                                {coin.title}
+                                <Tooltip title={marketCapToolTip}>
+                                    <InfoIcon />
+                                </Tooltip>
+                            </Heading>
+                            <Subtitle>
+                                {coin.value === '--' ? '∞' : '$' + coin.value}
+                            </Subtitle>
+                        </Item>
+                    ))}
                 </Box>
             </Grid>
         </Grid>

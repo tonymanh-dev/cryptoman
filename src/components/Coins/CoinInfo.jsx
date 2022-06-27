@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { numberWithCommas } from '../../pages/Market';
-import {
-    Avatar,
-    Box,
-    Chip,
-    IconButton,
-    Grid,
-    Button,
-    Card,
-    Stack,
-} from '@mui/material';
+import { Avatar, Box, Chip, Grid, Button, Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import {
     FaStar,
-    FaRegStar,
     FaRegBell,
     FaShare,
     FaCaretDown,
@@ -23,35 +13,17 @@ import {
 
 import Stats from './Stats';
 import { LinearProgress, linearProgressClasses, styled } from '@mui/material';
-import Chart from './Chart';
 
-const CoinInfo = ({
-    name,
-    image,
-    symbol,
-    rank,
-    hashingAlgorithm,
-    categories,
-    currentPrice,
-    priceChangePer24h,
-    totalSupply,
-    marketCap,
-    circulatingSupply,
-    fullyDilutedValuation,
-    totalVolume,
-    maxSupply,
-    low24h,
-    high24h,
-}) => {
+const CoinInfo = ({ data, id }) => {
     const BtnOutline = styled(Button)(({ theme }) => ({
         fontSize: '18px',
         marginRight: '4px',
         padding: '6px 12px',
-        borderColor: theme.palette.secondary.main,
+        borderColor: theme.palette.divider,
         borderRadius: '6px',
-        color: theme.palette.text.grey,
+        color: theme.palette.text.secondary,
         '&:hover': {
-            borderColor: theme.palette.secondary.main,
+            borderColor: theme.palette.primary,
         },
     }));
 
@@ -63,14 +35,26 @@ const CoinInfo = ({
         },
         borderRadius: 5,
         alignItems: 'center',
+        margin: '10px 0',
+        '.MuiLinearProgress-barColorPrimary': {
+            backgroundColor: '',
+            backgroundImage: 'linear-gradient(to right, #afe15d, #39b385)',
+        },
         [`&.${linearProgressClasses.colorPrimary}`]: {
             backgroundColor:
                 theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
         },
         [`& .${linearProgressClasses.bar}`]: {
             backgroundColor:
-                theme.palette.mode === 'light' ? 'primary' : '#308fe8',
+                theme.palette.mode === 'light' ? 'primary' : 'secondary',
         },
+    }));
+
+    const ChipStyled = styled(Chip)(({ theme }) => ({
+        backgroundColor: theme.palette.background.paper,
+        padding: '4px',
+        height: '30px',
+        fontWeight: '500',
     }));
 
     return (
@@ -80,20 +64,20 @@ const CoinInfo = ({
                 sx={{
                     display: 'flex',
                     justifyContent: 'space-between',
-                    m: '34px 0',
+                    mb: '34px',
                 }}
             >
                 <Grid item xs={12} md={6}>
                     <Chip
-                        label={`Rank #${rank}`}
+                        label={`Rank #${data.market_cap_rank}`}
                         variant="outlined"
-                        size="small"
                         sx={{
                             fontSize: '12px',
-                            fontWeight: '500',
-                            borderColor: 'text.grey',
-                            bgcolor: 'text.grey',
-                            color: 'primary.white',
+                            fontWeight: '600',
+                            borderColor: 'divider',
+                            bgcolor: 'primary.grey',
+                            color: '#fff',
+                            height: '30px',
                         }}
                     />
                     <Box
@@ -105,22 +89,22 @@ const CoinInfo = ({
                         }}
                     >
                         <Avatar
-                            src={image}
+                            src={data.image.small}
                             sx={{ height: '24px', width: '24px' }}
-                            alt={name}
+                            alt={data.name}
                         />
                         <Typography
                             variant="h6"
-                            sx={{ fontSize: '1.6rem', fontWeight: '400' }}
+                            sx={{ fontSize: '26px', fontWeight: '600' }}
                         >
-                            {name}
+                            {data.name}
                         </Typography>
 
                         <Typography
                             variant="body2"
                             sx={{ fontSize: '16px', fontWeight: '500' }}
                         >
-                            ({symbol.toUpperCase()})
+                            ({data.symbol.toUpperCase()})
                         </Typography>
                     </Box>
                     <Box sx={{ m: '10px' }}>
@@ -130,12 +114,7 @@ const CoinInfo = ({
                         <BtnOutline variant="outlined">
                             <FaRegBell />
                         </BtnOutline>
-                        <BtnOutline
-                            variant="outlined"
-                            sx={{
-                                color: 'primary.yellow',
-                            }}
-                        >
+                        <BtnOutline variant="outlined">
                             <FaStar />
                         </BtnOutline>
                     </Box>
@@ -154,10 +133,10 @@ const CoinInfo = ({
                             variant="h6"
                             sx={{ fontSize: '14px', fontWeight: '400' }}
                         >
-                            {name} Price
+                            {data.name} Price
                         </Typography>
                         <Typography variant="body2">
-                            ({symbol.toUpperCase()})
+                            ({data.symbol.toUpperCase()})
                         </Typography>
                     </Box>
 
@@ -178,7 +157,10 @@ const CoinInfo = ({
                                 letterSpacing: '1px',
                             }}
                         >
-                            $ {numberWithCommas(currentPrice)}
+                            ${' '}
+                            {numberWithCommas(
+                                data.market_data.current_price.usd,
+                            )}
                         </Typography>
                         <Box
                             sx={{
@@ -186,7 +168,7 @@ const CoinInfo = ({
                                 borderRadius: '6px',
                             }}
                             backgroundColor={
-                                priceChangePer24h > 0
+                                data.market_data.price_change_percentage_24h > 0
                                     ? 'primary.main'
                                     : '#ea3943'
                             }
@@ -200,13 +182,17 @@ const CoinInfo = ({
                                     color: '#fff',
                                 }}
                             >
-                                {priceChangePer24h > 0 ? (
+                                {data.market_data.price_change_percentage_24h >
+                                0 ? (
                                     <FaCaretUp />
                                 ) : (
                                     <FaCaretDown />
                                 )}
                                 <Typography>
-                                    {priceChangePer24h.toFixed(2)}%
+                                    {data.market_data.price_change_percentage_24h.toFixed(
+                                        2,
+                                    )}
+                                    %
                                 </Typography>
                             </Box>
                         </Box>
@@ -216,8 +202,7 @@ const CoinInfo = ({
                             width={{ sm: '100%', md: '70%' }}
                             justifycontent={{ md: 'end' }}
                             variant="determinate"
-                            value={30}
-                            sx={{ m: '6px 0' }}
+                            value={60}
                         />
                     </Box>
 
@@ -239,19 +224,24 @@ const CoinInfo = ({
                                 variant="body2"
                                 sx={{ fontWeight: '500', fontSize: '14px' }}
                             >
-                                ${numberWithCommas(low24h)}
+                                $
+                                {numberWithCommas(data.market_data.low_24h.usd)}
                             </Typography>
                             <Typography variant="body2">24H Range</Typography>
                             <Typography
                                 variant="body2"
                                 sx={{ fontWeight: '500', fontSize: '14px' }}
                             >
-                                ${numberWithCommas(high24h)}
+                                $
+                                {numberWithCommas(
+                                    data.market_data.high_24h.usd,
+                                )}
                             </Typography>
                         </Box>
                     </Box>
                 </Grid>
 
+                {/* Chip Tag */}
                 <Grid item xs={12} md={8}>
                     <Box
                         sx={{
@@ -265,32 +255,28 @@ const CoinInfo = ({
                             direction="row"
                             sx={{ flexWrap: 'wrap', gap: '10px' }}
                         >
-                            {hashingAlgorithm && (
-                                <Chip label={hashingAlgorithm} clickable></Chip>
+                            {data.hashing_algorithm && (
+                                <ChipStyled
+                                    size="small"
+                                    label={data.hashing_algorithm}
+                                ></ChipStyled>
                             )}
-                            {categories &&
-                                categories
+                            {data.categories &&
+                                data.categories
                                     .filter((el) => el != null)
                                     .map((hash) => (
-                                        <Chip
+                                        <ChipStyled
+                                            size="small"
                                             label={hash}
                                             key={hash}
-                                            clickable
-                                        ></Chip>
+                                        ></ChipStyled>
                                     ))}
                         </Stack>
                     </Box>
                 </Grid>
             </Grid>
 
-            <Stats
-                marketCap={marketCap}
-                totalVolume={totalVolume}
-                totalSupply={totalSupply}
-                maxSupply={maxSupply}
-                circulatingSupply={circulatingSupply}
-                fullyDilutedValuation={fullyDilutedValuation}
-            />
+            <Stats data={data} />
         </div>
     );
 };

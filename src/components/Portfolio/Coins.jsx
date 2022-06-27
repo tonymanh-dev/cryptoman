@@ -1,28 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
-import Box from '@mui/material/Box'
-import Collapse from '@mui/material/Collapse'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Typography from '@mui/material/Typography'
-import Paper from '@mui/material/Paper'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import { Avatar, Button } from '@mui/material'
+import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { Avatar, Button } from '@mui/material';
 
-import ModalForm from './Modal'
-import { account1 } from '../../data/dummy'
-import { useContext } from 'react'
-import { CoinsContext } from '../../services/CryptoApiContext'
+import ModalForm from './Modal';
+import { portfolio, movements } from '../../data/dummy';
 
 // Row data
-const portfolio = account1.map((acc) => acc.portfolio)
-
-const rows = portfolio[0].map((coin, i) => {
+const rows = portfolio.map((coin, i) => {
     return {
         id: i + 1,
         coin: coin.coin,
@@ -32,12 +28,11 @@ const rows = portfolio[0].map((coin, i) => {
         balance: coin.balance,
         value: coin.value,
         avarage_price: coin.avarage_price,
-    }
-})
+    };
+});
 
 //Row expand data
-const movements = account1.map((acc) => acc.movements)
-const rowsExpand = movements[0].map((mov, i) => {
+const rowsExpand = movements.map((mov, i) => {
     return {
         id: i + 1,
         symbol: mov.symbol,
@@ -46,18 +41,21 @@ const rowsExpand = movements[0].map((mov, i) => {
         price: mov.price,
         spent: mov.spent,
         time: mov.time,
-    }
-})
+    };
+});
 
 // Main function Row of Coin
 const Row = ({ row }) => {
-    const [open, setOpen] = useState(false)
-    const currentPrice = useContext(CoinsContext)
-    console.log(currentPrice)
+    const [open, setOpen] = useState(false);
 
     return (
-        <React.Fragment>
-            <TableRow key={row.id} sx={{ '& > *': { borderBottom: 'unset' } }}>
+        <>
+            <TableRow
+                key={row.id}
+                sx={{
+                    '& > *': { borderBottom: 'unset' },
+                }}
+            >
                 <TableCell>{row.id}</TableCell>
                 <TableCell component="th" scope="row">
                     <Box
@@ -174,15 +172,23 @@ const Row = ({ row }) => {
                     </Collapse>
                 </TableCell>
             </TableRow>
-        </React.Fragment>
-    )
-}
+        </>
+    );
+};
 
 export default function CollapsibleTable() {
     return (
         <TableContainer
             component={Paper}
-            sx={{ margin: '24px', width: 'unset', maxWidth: '100%' }}
+            sx={{
+                margin: '24px',
+                width: 'unset',
+                maxWidth: '100%',
+                '.MuiTableRow-root': {
+                    backgroundColor: 'background.default',
+                },
+                boxShadow: 'none',
+            }}
         >
             <Table aria-label="collapsible table">
                 <TableHead>
@@ -205,5 +211,5 @@ export default function CollapsibleTable() {
                 </TableBody>
             </Table>
         </TableContainer>
-    )
+    );
 }

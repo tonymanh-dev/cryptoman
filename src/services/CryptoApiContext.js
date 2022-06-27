@@ -5,8 +5,9 @@ const CoinsContext = createContext();
 
 const CryptoApiProvider = ({ children }) => {
     const [coins, setCoins] = useState([]);
-
     const [allcoins, setAllcoins] = useState('10');
+    const [drawer, setDrawer] = useState(false);
+    const [mode, setMode] = useState('light');
 
     useEffect(() => {
         const getData = async () => {
@@ -15,21 +16,23 @@ const CryptoApiProvider = ({ children }) => {
             );
 
             const data = await response.data;
-            // console.log(data)
             setCoins(data);
         };
         getData();
     }, [allcoins]);
 
-    const cost = 10000;
-    // console.log(coins)
-
-    if (coins[0]) {
-        const profit = coins[0].current_price - cost;
-    }
-    // console.log(coins)
     return (
-        <CoinsContext.Provider value={coins}>{children}</CoinsContext.Provider>
+        <CoinsContext.Provider
+            value={{
+                coins,
+                drawer,
+                setDrawer,
+                mode,
+                setMode,
+            }}
+        >
+            {children}
+        </CoinsContext.Provider>
     );
 };
 

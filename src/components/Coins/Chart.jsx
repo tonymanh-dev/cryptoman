@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useGetMarketChartQuery } from '../../services/cryptoApi';
 import axios from 'axios';
 import { marketChart } from '../../data/cryptoApi';
 import { chartTimes, modeChart } from '../../data/data';
@@ -15,16 +14,14 @@ const Chart = ({ coin, id }) => {
     const [chartData, setChartData] = useState();
     const [charts, setCharts] = useState(1);
     const [days, setDays] = useState(1);
-    // const { data } = useGetMarketChartQuery(id, days);
 
-    const BoxChart = styled(Box)(({ theme }) => ({
+    const BoxChart = styled(Box)(() => ({
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         color: 'inherit',
     }));
-    // if (data) console.log(data.prices);
 
     const fetchMarketChart = async () => {
         const { data } = await axios.get(marketChart(id, days));
@@ -36,7 +33,7 @@ const Chart = ({ coin, id }) => {
     }, [days]);
 
     return (
-        <Grid item xs={12} lg={8}>
+        <Grid item xs={12} lg={8} mt="24px">
             <Typography
                 variant="h3"
                 sx={{ fontSize: '24px', fontWeight: '500', m: '10px 0' }}

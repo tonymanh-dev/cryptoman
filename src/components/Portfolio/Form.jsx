@@ -8,18 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Avatar, Button, Typography } from '@mui/material';
 import TimePicker from './TimePicker';
 
-import { account1 } from '../../data/dummy';
 import { useEffect } from 'react';
-
-const porfolio = account1.map((coin) => coin.portfolio);
-// const coinData = porfolio[0].map((coin) => {
-//     return {
-//         value: coin.symbol,
-//         label: coin.coin,
-//         image: coin.image,
-//         currentPrice: coin.current_price,
-//     }
-// })
 
 // Custom style MUI
 const formStyle = {
@@ -30,7 +19,7 @@ const formStyle = {
     },
     '& .MuiOutlinedInput-root:hover': {
         '& > fieldset': {
-            borderColor: 'primary.main',
+            borderColor: '',
         },
     },
 };
@@ -68,7 +57,7 @@ const titleForm = {
 const Form = ({ currentPrice, currentCoin }) => {
     const [coin, setCoin] = useState('Bitcoin');
     const [pricePerCoin, setPricePerCoin] = useState(0);
-    const coins = useContext(CoinsContext);
+    const { coins } = useContext(CoinsContext);
 
     // Update state price and coin
     useEffect(() => {
@@ -93,7 +82,11 @@ const Form = ({ currentPrice, currentCoin }) => {
         <Box
             component="form"
             sx={{
-                '& .MuiTextField-root': { width: '100%', margin: '4px 0 14px' },
+                '& .MuiTextField-root': {
+                    width: '100%',
+                    margin: '4px 0 14px',
+                    bgcolor: 'primary.paper',
+                },
             }}
             noValidate
             autoComplete="off"
