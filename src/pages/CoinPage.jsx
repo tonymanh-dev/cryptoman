@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router';
 import { useGetSingleCoinQuery } from '../services/cryptoApi';
 import CoinInfo from '../components/Coins/CoinInfo';
@@ -42,12 +42,9 @@ const CoinPage = () => {
     ];
 
     return (
-        <Box sx={{ pl: { xs: '0', lg: '24px' }, width: '100%' }}>
-            <Box sx={{ m: '24px 0' }}>
-                <Breadcrumbs
-                    separator={<NavigateNextIcon fontSize="small" />}
-                    arial-label="breadcrumb"
-                >
+        <Box sx={{ width: '100%' }}>
+            <Box sx={{ mt: '10px' }}>
+                <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}>
                     {breadcrumbs}
                 </Breadcrumbs>
             </Box>

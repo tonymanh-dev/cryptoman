@@ -103,3 +103,29 @@ export const links = [
 ))}
 </div> */
 }
+
+export const porfolioChart = [
+    {
+        label: '24H',
+        value: 1,
+    },
+    {
+        label: '7D',
+        value: 7,
+    },
+
+    {
+        label: '30D',
+        value: 30,
+    },
+
+    {
+        label: '90D',
+        value: 90,
+    },
+
+    {
+        label: '1Y',
+        value: 365,
+    },
+];

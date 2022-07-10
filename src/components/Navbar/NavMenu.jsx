@@ -18,9 +18,6 @@ const NavMenu = () => {
     return (
         <div>
             <Button
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
                 sx={{
                     borderRadius: 20,

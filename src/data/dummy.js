@@ -1,36 +1,67 @@
-export const portfolio = [
+export const myPortfolio = [
     {
-        id: 1,
-        coin: 'Bitcoin',
-        symbol: 'BTC',
-        image:
-            'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
-        current_price: 30.089,
-        balance: 0.56,
-        value: 15.6,
-        avarage_price: 8.2,
+        coin: {
+            name: 'Bitcoin',
+            symbol: 'btc',
+            current_price: 110000,
+
+            image:
+                'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
+        },
+
+        profit: 88000,
+        quantity: 2,
+        time: '',
+        average_price: 9000,
+        spent: 18000,
     },
     {
-        id: 2,
-        coin: 'Ethereum',
-        symbol: 'ETH',
-        image:
-            'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
-        current_price: 2.398,
-        balance: 0.56,
-        value: 15.6,
-        avarage_price: 8.2,
+        coin: {
+            name: 'Ethereum',
+            symbol: 'eth',
+            current_price: 6690,
+
+            image:
+                'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
+        },
+
+        profit: 130109,
+        quantity: 10,
+        time: '',
+        average_price: 1200,
+        spent: 12000,
     },
     {
-        id: 3,
-        coin: 'Polkadot',
-        symbol: 'DOT',
-        image:
-            'https://assets.coingecko.com/coins/images/12171/thumb/polkadot.png?1639712644',
-        current_price: 98,
-        balance: 0.56,
-        value: 15.6,
-        avarage_price: 8.2,
+        coin: {
+            name: 'Cardano',
+            symbol: 'ada',
+            current_price: 6.3,
+
+            image:
+                'https://assets.coingecko.com/coins/images/975/large/cardano.png?1547034860',
+        },
+
+        profit: 30608,
+        quantity: 1000,
+        time: '',
+        average_price: 2,
+        spent: 2000,
+    },
+    {
+        coin: {
+            name: 'Polkadot',
+            symbol: 'dot',
+            current_price: 380,
+
+            image:
+                'https://assets.coingecko.com/coins/images/12171/thumb/polkadot.png?1639712644',
+        },
+
+        profit: 680999,
+        quantity: 1000,
+        time: '',
+        average_price: 55,
+        spent: 55000,
     },
 ];
 
@@ -62,6 +93,20 @@ export const movements = [
         spent: 14.5,
         time: '2022/June/20',
     },
+];
+
+export const balanceData = [
+    { date: 'Jan', value: 2000 },
+    { date: 'Fed', value: 10000 },
+    { date: 'Mar', value: 30000 },
+    { date: 'Apr', value: 40000 },
+    { date: 'May', value: 60000 },
+    { date: 'Jun', value: 50000 },
+    { date: 'Jul', value: 40000 },
+    { date: 'Aug', value: 60000 },
+    { date: 'Sep', value: 40000 },
+    { date: 'Oct', value: 50000 },
+    { date: 'Dec', value: 20000 },
 ];
 
 // Info

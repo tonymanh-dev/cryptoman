@@ -1,112 +1,98 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { CoinsContext } from '../../services/CryptoApiContext';
+import React, { useContext } from 'react';
+import { AppContext } from '../../services/AppContext';
+import { numberWithCommas } from '../../pages/Market';
 
-import { Box, Paper, Grid, Typography, styled } from '@mui/material';
+import { Box, Paper, Grid, Typography } from '@mui/material';
+import {
+    CardStyled,
+    CardContentStyled,
+    Subtitle,
+    NumberText,
+} from '../CardStyled';
+import Loader from '../Loader';
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    borderRadius: '10px',
-    boxShadow: 'none',
-}));
+const Stats = () => {
+    const { portfolio } = useContext(AppContext);
+    if (!portfolio) return <Loader />;
 
-const Overview = () => {
+    // Get portfolio stats value
+    const totalProfit = portfolio
+        .map((coin) => coin.profit)
+        .reduce((prevProfit, currentProfit) => prevProfit + currentProfit, 0);
+
+    const balance = portfolio
+        .map((coin) => coin.totalValue)
+        .reduce((prevCoin, currentCoin) => prevCoin + currentCoin, 0);
+
+    const stableCoin = portfolio
+        .filter((coin) => {
+            return coin.symbol === 'usdc' || coin.symbol === 'usdt';
+        })
+        .map((coin) => coin.totalValue)
+        .reduce((acc, cur) => acc + cur, 0);
+
     return (
-        <Box sx={{ flexGrow: 1, margin: '24px' }}>
-            <Grid
-                container
-                spacing={{ xs: 2, md: 2 }}
-                columns={{ xs: 4, sm: 8, md: 12 }}
-            >
-                <Grid item xs={2} sm={4} md={3}>
-                    <Item>
-                        <Typography
-                            variant="h2"
-                            alignItems="center"
-                            fontSize="16px"
-                            fontWeight="400"
-                        >
-                            Balance
-                        </Typography>
-                        <Typography
-                            variant="h1"
-                            alignItems="center"
-                            fontSize="20px"
-                            fontWeight="500"
-                            mt="10px"
-                        >
-                            $ 102.836.99
-                        </Typography>
-                    </Item>
+        <Box sx={{ flexGrow: 1, mb: '24px' }}>
+            <Grid container spacing={{ xs: 2, sm: 3 }}>
+                <Grid item xs={12} sm={6} md={3}>
+                    <CardStyled>
+                        <CardContentStyled>
+                            <Subtitle component="div">Total Balance</Subtitle>
+                            <NumberText>
+                                {numberWithCommas(balance.toFixed(2))}{' '}
+                                <Typography variant="body2">USD</Typography>
+                            </NumberText>
+                        </CardContentStyled>
+                    </CardStyled>
                 </Grid>
-                <Grid item xs={2} sm={4} md={3}>
-                    <Item>
-                        <Typography
-                            variant="h2"
-                            alignItems="center"
-                            fontSize="16px"
-                            fontWeight="400"
-                        >
-                            Profit/Loss
-                        </Typography>
-                        <Typography
-                            variant="h1"
-                            alignItems="center"
-                            fontSize="20px"
-                            fontWeight="500"
-                            mt="10px"
-                        >
-                            $ 102.836.99
-                        </Typography>
-                    </Item>
+                <Grid item xs={12} sm={6} md={3}>
+                    <CardStyled>
+                        <CardContentStyled>
+                            <Subtitle component="div">Profit/Loss</Subtitle>
+                            <NumberText>
+                                {numberWithCommas(totalProfit.toFixed(2))}{' '}
+                                <Typography variant="body2">USD</Typography>
+                            </NumberText>
+                        </CardContentStyled>
+                    </CardStyled>
                 </Grid>
-                <Grid item xs={2} sm={4} md={3}>
-                    <Item>
-                        <Typography
-                            variant="h2"
-                            alignItems="center"
-                            fontSize="16px"
-                            fontWeight="400"
-                        >
-                            24h Change
-                        </Typography>
-                        <Typography
-                            variant="h1"
-                            alignItems="center"
-                            fontSize="20px"
-                            fontWeight="500"
-                            mt="10px"
-                        >
-                            - $ 1.029,7
-                        </Typography>
-                    </Item>
+                <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={3}
+                    display={{ xs: 'none', sm: 'block' }}
+                >
+                    <CardStyled>
+                        <CardContentStyled>
+                            <Subtitle component="div">24H Change</Subtitle>
+                            <NumberText>
+                                {numberWithCommas(totalProfit.toFixed(2))}{' '}
+                                <Typography variant="body2">USD</Typography>
+                            </NumberText>
+                        </CardContentStyled>
+                    </CardStyled>
                 </Grid>
-                <Grid item xs={2} sm={4} md={3}>
-                    <Item>
-                        <Typography
-                            variant="h2"
-                            alignItems="center"
-                            fontSize="16px"
-                            fontWeight="400"
-                        >
-                            Average Cost
-                        </Typography>
-                        <Typography
-                            variant="h1"
-                            alignItems="center"
-                            fontSize="20px"
-                            fontWeight="500"
-                            mt="10px"
-                        >
-                            $ 42.869,33
-                        </Typography>
-                    </Item>
+                <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={3}
+                    display={{ xs: 'none', sm: 'block' }}
+                >
+                    <CardStyled>
+                        <CardContentStyled>
+                            <Subtitle component="div">Stable Coin</Subtitle>
+                            <NumberText>
+                                {numberWithCommas(stableCoin.toFixed(2))}{' '}
+                                <Typography variant="body2">USD</Typography>
+                            </NumberText>
+                        </CardContentStyled>
+                    </CardStyled>
                 </Grid>
             </Grid>
         </Box>
     );
 };
 
-export default Overview;
+export default Stats;

@@ -75,9 +75,10 @@ const CoinInfo = ({ data, id }) => {
                             fontSize: '12px',
                             fontWeight: '600',
                             borderColor: 'divider',
-                            bgcolor: 'primary.grey',
-                            color: '#fff',
+                            bgcolor: 'background.default',
+                            color: 'text.primary',
                             height: '30px',
+                            m: '14px 0',
                         }}
                     />
                     <Box
@@ -85,7 +86,6 @@ const CoinInfo = ({ data, id }) => {
                             display: 'flex',
                             alignItems: 'center',
                             gap: '10px',
-                            mt: '14px',
                         }}
                     >
                         <Avatar
@@ -107,7 +107,7 @@ const CoinInfo = ({ data, id }) => {
                             ({data.symbol.toUpperCase()})
                         </Typography>
                     </Box>
-                    <Box sx={{ m: '10px' }}>
+                    <Box sx={{ m: '10px 0' }}>
                         <BtnOutline variant="outlined">
                             <FaShare />
                         </BtnOutline>
@@ -135,7 +135,7 @@ const CoinInfo = ({ data, id }) => {
                         >
                             {data.name} Price
                         </Typography>
-                        <Typography variant="body2">
+                        <Typography variant="body2" component="span">
                             ({data.symbol.toUpperCase()})
                         </Typography>
                     </Box>

@@ -4,7 +4,7 @@ import { cryptoApi } from '../services/cryptoApi';
 
 export default configureStore({
     reducer: {
-        [marketCapApi.reducerPath]: marketCapApi.reducer,
         [cryptoApi.reducerPath]: cryptoApi.reducer,
+        [marketCapApi.reducerPath]: marketCapApi.reducer,
     },
 });

@@ -1,9 +1,9 @@
 import React, { useContext, useMemo } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { CoinsContext } from './services/CryptoApiContext';
+import { AppContext } from './services/AppContext';
 
 import './App.css';
-import customPalette from './palette';
+import customTheme from './theme';
 import Dashboard from './pages/Dashboard';
 import Portfolio from './pages/Portfolio';
 import Market from './pages/Market';
@@ -20,27 +20,30 @@ import {
 } from '@mui/material';
 
 export const App = () => {
-    const { mode } = useContext(CoinsContext);
+    const { mode } = useContext(AppContext);
 
-    const theme = useMemo(() => createTheme(customPalette(mode)), [mode]);
+    const theme = useMemo(() => createTheme(customTheme(mode)), [mode]);
 
     return (
         <BrowserRouter>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <Box bgcolor="background.default">
-                    <Navbar />
+                <Box
+                    sx={{
+                        display: 'flex',
+                        backgroundColor: 'background.default',
+                    }}
+                >
+                    <Sidebar />
 
                     <Container
                         maxWidth="xl"
                         sx={{
-                            display: 'flex',
-                            flexDirection: 'row',
                             mt: '64px',
-                            backgroundColor: 'background.default',
+                            backgroundColor: 'background.paper',
                         }}
                     >
-                        {<Sidebar />}
+                        <Navbar />
 
                         <Routes>
                             <Route path="" element={<Market />} />

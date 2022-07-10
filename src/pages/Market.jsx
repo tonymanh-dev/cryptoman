@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetCryptosQuery } from '../services/cryptoApi';
-import { FaRegStar, FaStar } from 'react-icons/fa';
+import { FaRegStar } from 'react-icons/fa';
 
 import Loader from '../components/Loader';
 import CryptoStats from '../components/Market/CryptoStats';
@@ -21,7 +21,26 @@ import {
     Avatar,
     styled,
     Pagination,
+    Breadcrumbs,
 } from '@mui/material';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import {
+    getBreadcrumbs,
+    TableCellStyled,
+    SubtitleTable1,
+    SubtitleTable2,
+} from '../components/CardStyled';
+
+const Container = styled(Box)(({ theme }) => ({
+    [theme.breakpoints.down('lg')]: {
+        marginLeft: '0',
+    },
+}));
+
+const TypoStyled = styled(Typography)(({ theme }) => ({
+    ...theme.typography.subtitle1,
+    fontWeight: '400',
+}));
 
 export const numberWithCommas = (number) => {
     if (!number) return '--';
@@ -44,30 +63,21 @@ const Market = () => {
     //             coin.symbol.toLowerCase().includes(search),
     //     );
     // };
-    const Container = styled(Box)(({ theme }) => ({
-        [theme.breakpoints.down('lg')]: {
-            marginLeft: '0',
-        },
-    }));
-
-    const TableCellStyled = styled(TableCell)(({ theme }) => ({
-        borderBottom: '1px solid',
-        borderBottomColor: theme.palette.divider,
-    }));
-
-    const TypoStyled = styled(Typography)(({ theme }) => ({
-        ...theme.typography.subtitle1,
-        fontWeight: '500',
-    }));
 
     return (
-        <Container sx={{ marginLeft: '24px', width: '100%' }}>
+        <Container sx={{ width: '100%', mt: '10px' }}>
+            <Breadcrumbs
+                sx={{ mb: '14px' }}
+                separator={<NavigateNextIcon fontSize="small" />}
+            >
+                {getBreadcrumbs('/market', 'Home', 'Market')}
+            </Breadcrumbs>
             <CryptoStats />
 
             <TableContainer
                 component={Paper}
                 sx={{
-                    mt: '34px',
+                    mt: '24px',
                     '.MuiTable-root': {
                         backgroundColor: 'background.default',
                     },
@@ -149,9 +159,9 @@ const Market = () => {
                                                         }}
                                                         onClick={() => {}}
                                                     />
-                                                    <TypoStyled>
+                                                    <SubtitleTable1>
                                                         {coin.market_cap_rank}
-                                                    </TypoStyled>
+                                                    </SubtitleTable1>
                                                 </Box>
                                             </TableCellStyled>
                                             <TableCellStyled
@@ -180,34 +190,32 @@ const Market = () => {
                                                             mr: '10px',
                                                         }}
                                                     />
-                                                    <TypoStyled>
+                                                    <SubtitleTable1>
                                                         {coin.name}
-                                                    </TypoStyled>
+                                                    </SubtitleTable1>
                                                 </Box>
                                             </TableCellStyled>
                                             <TableCellStyled align="left">
-                                                <TypoStyled
-                                                    sx={{ fontSize: '14px' }}
-                                                >
+                                                <SubtitleTable2>
                                                     {coin.symbol.toUpperCase()}
-                                                </TypoStyled>
+                                                </SubtitleTable2>
                                             </TableCellStyled>
                                             <TableCellStyled align="right">
-                                                <TypoStyled>
-                                                    ${' '}
+                                                <SubtitleTable1>
+                                                    $
                                                     {numberWithCommas(
                                                         coin.current_price.toFixed(
                                                             2,
                                                         ),
                                                     )}
-                                                </TypoStyled>
+                                                </SubtitleTable1>
                                             </TableCellStyled>
                                             <TableCellStyled align="right">
-                                                <TypoStyled
+                                                <SubtitleTable1
                                                     sx={{
                                                         color: priceUp
-                                                            ? 'rgb(14, 203, 129)'
-                                                            : 'red',
+                                                            ? 'greenCl'
+                                                            : 'redCl',
                                                     }}
                                                 >
                                                     {priceUp && '+'}
@@ -215,23 +223,23 @@ const Market = () => {
                                                         2,
                                                     )}
                                                     %
-                                                </TypoStyled>
+                                                </SubtitleTable1>
                                             </TableCellStyled>
                                             <TableCellStyled align="right">
-                                                <TypoStyled>
-                                                    ${' '}
+                                                <SubtitleTable1>
+                                                    $
                                                     {numberWithCommas(
                                                         coin.total_volume.toFixed(),
                                                     )}
-                                                </TypoStyled>
+                                                </SubtitleTable1>
                                             </TableCellStyled>
                                             <TableCellStyled align="right">
-                                                <TypoStyled>
-                                                    ${' '}
+                                                <SubtitleTable1>
+                                                    $
                                                     {numberWithCommas(
                                                         coin.market_cap,
                                                     )}
-                                                </TypoStyled>
+                                                </SubtitleTable1>
                                             </TableCellStyled>
                                         </TableRow>
                                     );

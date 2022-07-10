@@ -26,7 +26,7 @@ const BoxStyled = styled(Box)(({ theme }) => ({
     padding: '24px',
     boxShadow: theme.shadows[4],
     borderRadius: '10px',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
 }));
 
 const TabStyled = styled(Tab)(() => ({
@@ -40,31 +40,24 @@ const TabPanelStyled = styled(TabPanel)(() => ({
 }));
 
 // Main function Modal
-const ModalForm = ({ currentCoin, currentPrice }) => {
-    const [open, setOpen] = useState(false);
+const ModalForm = ({
+    data,
+    currentCoin,
+    // currentPrice,
+    openModal,
+    handleCloseModal,
+    handleToast,
+}) => {
     const [value, setValue] = useState('BUY');
 
-    // Handle action Open/Close Modal
-    const handleOpen = () => setOpen(true);
-
-    const handleClose = () => setOpen(false);
-
     // Handle tab action Buy, Sell, Transfer
-    const handleChangeAction = (e, newAction) => {
+    const handleChangeAction = (_e, newAction) => {
         setValue(newAction);
     };
 
     return (
         <div>
-            <Button onClick={handleOpen}>
-                <AddIcon />
-            </Button>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
+            <Modal open={openModal} onClose={handleCloseModal}>
                 <BoxStyled>
                     <Box
                         sx={{
@@ -82,7 +75,7 @@ const ModalForm = ({ currentCoin, currentPrice }) => {
                                 minWidth: '32px',
                                 justifyContent: 'center',
                             }}
-                            onClick={handleClose}
+                            onClick={handleCloseModal}
                         >
                             <CloseIcon />
                         </Button>
@@ -115,11 +108,14 @@ const ModalForm = ({ currentCoin, currentPrice }) => {
                             {['BUY', 'SELL', 'TRANSFER'].map((action) => (
                                 <TabPanelStyled value={action} key={action}>
                                     {action === 'TRANSFER' ? (
-                                        <Transfer currentCoin={currentCoin} />
+                                        <Transfer
+                                            handleCloseModal={handleCloseModal}
+                                        />
                                     ) : (
                                         <Form
-                                            currentPrice={currentPrice}
-                                            currentCoin={currentCoin}
+                                            data={data}
+                                            handleCloseModal={handleCloseModal}
+                                            handleToast={handleToast}
                                         />
                                     )}
                                 </TabPanelStyled>

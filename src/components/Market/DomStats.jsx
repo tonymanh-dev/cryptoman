@@ -1,12 +1,15 @@
 import React from 'react';
-import millify from 'millify';
 import { useGetMarketStatsQuery } from '../../services/cryptoApi';
-
-import Loader from '../Loader';
 import { numberWithCommas } from '../../pages/Market';
 
-import { Box, Grid } from '@mui/material';
-import { Item, Heading, StatsBody } from './CryptoStats';
+import { Grid, Typography } from '@mui/material';
+import {
+    CardStyled,
+    CardContentStyled,
+    Subtitle,
+    NumberText,
+} from '../CardStyled';
+import Loader from '../Loader';
 
 const DomStats = () => {
     const { data } = useGetMarketStatsQuery();
@@ -18,21 +21,39 @@ const DomStats = () => {
 
     return (
         <>
-            <Grid item xs={12} sm={4} md={3}>
-                <Item>
-                    <Heading>Bitcoin Dominance</Heading>
-                    <StatsBody>
-                        {btcDominance && btcDominance.toFixed(2)}%
-                    </StatsBody>
-                </Item>
+            <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                display={{ xs: 'none', sm: 'block' }}
+            >
+                <CardStyled>
+                    <CardContentStyled>
+                        <Subtitle component="div">Bitcoin Dominance</Subtitle>
+                        <NumberText>
+                            {btcDominance.toFixed(2)}
+                            <Typography variant="body2">%</Typography>
+                        </NumberText>
+                    </CardContentStyled>
+                </CardStyled>
             </Grid>
-            <Grid item xs={12} sm={4} md={3}>
-                <Item>
-                    <Heading># Coin active</Heading>
-                    <StatsBody>
-                        {totalCoins && numberWithCommas(totalCoins)}
-                    </StatsBody>
-                </Item>
+            <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                display={{ xs: 'none', sm: 'block' }}
+            >
+                <CardStyled>
+                    <CardContentStyled>
+                        <Subtitle component="div"># Coin active</Subtitle>
+                        <NumberText>
+                            {numberWithCommas(totalCoins)}
+                            <Typography variant="body2">%</Typography>
+                        </NumberText>
+                    </CardContentStyled>
+                </CardStyled>
             </Grid>
         </>
     );

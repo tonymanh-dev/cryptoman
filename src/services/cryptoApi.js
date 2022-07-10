@@ -9,9 +9,9 @@ export const cryptoApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
     endpoints: (builder) => ({
         getCryptos: builder.query({
-            query: () =>
+            query: (count = 100) =>
                 createRequest(
-                    '/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false',
+                    `/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${count}&page=1&sparkline=false`,
                 ),
         }),
         getMarketStats: builder.query({

@@ -2,17 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
-import { CryptoApiProvider } from '../src/services/CryptoApiContext';
+import { AppProvider } from '../src/services/AppContext';
 import App from './App';
 import store from './app/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <CryptoApiProvider>
-            <Provider store={store}>
+        <Provider store={store}>
+            <AppProvider>
                 <App />
-            </Provider>
-        </CryptoApiProvider>
+            </AppProvider>
+        </Provider>
     </React.StrictMode>,
 );

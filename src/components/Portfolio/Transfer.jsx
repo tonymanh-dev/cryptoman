@@ -1,20 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import { Avatar, Button, Typography } from '@mui/material';
 import TimePicker from './TimePicker';
 
-import { portfolio } from '../../data/dummy';
+import { AppContext } from '../../services/AppContext';
 import { useState } from 'react';
-
-const coins = portfolio.map((coin) => {
-    return {
-        value: coin.symbol,
-        label: coin.coin,
-        image: coin.image,
-    };
-});
 
 const transfers = [
     {
@@ -69,11 +61,10 @@ const titleForm = {
     fontSize: '14px',
 };
 
-export default function SelectTextFields({ currentCoin }) {
-    const [coin, setCoin] = useState('BTC');
+const Transfer = ({ handleCloseModal }) => {
+    const [coin, setCoin] = useState('');
     const [transfer, setTransfer] = useState('IN');
-
-    console.log(currentCoin);
+    const { portfolio } = useContext(AppContext);
 
     const handleChange = (e) => {
         setCoin(e.target.value);
@@ -81,6 +72,12 @@ export default function SelectTextFields({ currentCoin }) {
 
     const handleChangeTransfer = (e) => {
         setTransfer(e.target.value);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        handleCloseModal();
     };
 
     return (
@@ -103,8 +100,8 @@ export default function SelectTextFields({ currentCoin }) {
                     onChange={handleChange}
                     sx={formStyle}
                 >
-                    {coins.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
+                    {portfolio.map((option) => (
+                        <MenuItem key={option.symbol} value={option.name}>
                             <Box
                                 sx={{
                                     display: 'flex',
@@ -120,7 +117,7 @@ export default function SelectTextFields({ currentCoin }) {
                                     }}
                                 />
 
-                                {option.label}
+                                {option.name}
                             </Box>
                         </MenuItem>
                     ))}
@@ -164,6 +161,7 @@ export default function SelectTextFields({ currentCoin }) {
             </Box>
 
             <Button
+                disabled={coin ? false : true}
                 variant="contained"
                 sx={{
                     height: '46px',
@@ -172,9 +170,12 @@ export default function SelectTextFields({ currentCoin }) {
                     color: 'primary.white',
                     borderRadius: '10px',
                 }}
+                onClick={handleSubmit}
             >
                 Add Transaction
             </Button>
         </Box>
     );
-}
+};
+
+export default Transfer;

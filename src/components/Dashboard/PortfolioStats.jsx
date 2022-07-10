@@ -1,25 +1,223 @@
-import React from 'react';
-import { Box, Typography, Grid, Stack } from '@mui/material';
-import { Item } from './index';
+import React, { useState, useEffect, useContext } from 'react';
+import { AppContext } from '../../services/AppContext';
 
-const PortfolioStats = () => {
+import { numberWithCommas } from '../../pages/Market';
+
+import { Box, Grid, Typography } from '@mui/material';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import { GiReceiveMoney } from 'react-icons/gi';
+import { CardStyled, CardContentStyled, Subtitle, BodyText } from './styled';
+import SelectBtn from './SelectBtn';
+
+const PortfolioStats = ({ getStats }) => {
+    const [currency, setCurrency] = useState('USD');
+
+    const totalProfit = getStats().totalProfit;
+    const balance = getStats().balance;
+
     return (
-        <Stack m="24px" height="230px" color="text.primary">
-            <Typography variant="h6" fontSize="16px">
-                Portfolio Stats
-            </Typography>
-            <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2}>
-                    <Grid item xs={8}>
-                        <Item>xs=8</Item>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Item>xs=4</Item>
-                    </Grid>
+        <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={{ xs: 2 }}>
+                <Grid item xs={12} md={4}>
+                    <CardStyled>
+                        <CardContentStyled>
+                            <Box>
+                                <AccountBalanceWalletIcon />
+                                <Subtitle component="div">
+                                    Total Balance
+                                </Subtitle>
+                                <BodyText>
+                                    {numberWithCommas(balance)}{' '}
+                                    <Typography variant="body2">USD</Typography>
+                                </BodyText>
+                            </Box>
+                            <Box>
+                                {['BTC', 'USD'].map((view) => (
+                                    <SelectBtn
+                                        key={view}
+                                        onClick={() => setCurrency(view)}
+                                        selected={view === currency}
+                                    >
+                                        {view}
+                                    </SelectBtn>
+                                ))}
+                            </Box>
+                        </CardContentStyled>
+                    </CardStyled>
                 </Grid>
-            </Box>
-        </Stack>
+                <Grid item xs={12} sm={6} md={4}>
+                    <CardStyled>
+                        <CardContentStyled>
+                            <Box>
+                                <GiReceiveMoney
+                                    style={{ width: '24px', height: '24px' }}
+                                />
+                                <Subtitle component="div">
+                                    Total Profit
+                                </Subtitle>
+                                <BodyText>
+                                    {numberWithCommas(totalProfit)}{' '}
+                                    <Typography variant="body2">USD</Typography>
+                                </BodyText>
+                            </Box>
+
+                            <Box
+                                color={totalProfit > 0 ? 'greenCl' : '#ea3943'}
+                                sx={{
+                                    display: 'flex',
+                                    fontSize: '14px',
+                                    fontWeight: '500',
+                                }}
+                            >
+                                <Typography variant="subtitle2">
+                                    {totalProfit > 0 ? '+' : '-'}
+                                    8,6 %
+                                </Typography>
+                            </Box>
+                        </CardContentStyled>
+                    </CardStyled>
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    display={{
+                        xs: 'none',
+                        sm: 'block',
+                    }}
+                >
+                    <CardStyled>
+                        <CardContentStyled>
+                            <Box>
+                                <CurrencyExchangeIcon />
+                                <Subtitle component="div">24H Change</Subtitle>
+                                <BodyText>
+                                    {numberWithCommas(totalProfit)}{' '}
+                                    <Typography variant="body2">USD</Typography>
+                                </BodyText>
+                            </Box>
+                            <Box
+                                color={totalProfit > 0 ? 'greenCl' : '#ea3943'}
+                                sx={{
+                                    display: 'flex',
+                                    fontSize: '14px',
+                                    fontWeight: '500',
+                                }}
+                            >
+                                <Typography variant="subtitle2">
+                                    {totalProfit > 0 ? '+' : '-'}
+                                    8,6 %
+                                </Typography>
+                            </Box>
+                        </CardContentStyled>
+                    </CardStyled>
+                </Grid>
+            </Grid>
+        </Box>
     );
 };
 
 export default PortfolioStats;
+/*
+<Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={{ xs: 2 }}>
+                <Grid item xs={12} md={4}>
+                    <CardStyled>
+                        <CardContentStyled>
+                            <Box>
+                                <AccountBalanceWalletIcon />
+                                <Subtitle component="div">
+                                    Total Balance
+                                </Subtitle>
+                                <BodyText>
+                                    {numberWithCommas(balance.toFixed(2))}{' '}
+                                    <Typography variant="body2">USD</Typography>
+                                </BodyText>
+                            </Box>
+                            <Box>
+                                {['BTC', 'USD'].map((view) => (
+                                    <SelectBtn
+                                        key={view}
+                                        onClick={() => setCurrency(view)}
+                                        selected={view === currency}
+                                    >
+                                        {view}
+                                    </SelectBtn>
+                                ))}
+                            </Box>
+                        </CardContentStyled>
+                    </CardStyled>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                    <CardStyled>
+                        <CardContentStyled>
+                            <Box>
+                                <GiReceiveMoney
+                                    style={{ width: '24px', height: '24px' }}
+                                />
+                                <Subtitle component="div">
+                                    Total Profit
+                                </Subtitle>
+                                <BodyText>
+                                    {numberWithCommas(totalProfit.toFixed(2))}{' '}
+                                    <Typography variant="body2">USD</Typography>
+                                </BodyText>
+                            </Box>
+
+                            <Box
+                                color={totalProfit > 0 ? 'greenCl' : '#ea3943'}
+                                sx={{
+                                    display: 'flex',
+                                    fontSize: '14px',
+                                    fontWeight: '500',
+                                }}
+                            >
+                                <Typography variant="subtitle2">
+                                    {totalProfit > 0 ? '+' : '-'}
+                                    8,6 %
+                                </Typography>
+                            </Box>
+                        </CardContentStyled>
+                    </CardStyled>
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    display={{
+                        xs: 'none',
+                        sm: 'block',
+                    }}
+                >
+                    <CardStyled>
+                        <CardContentStyled>
+                            <Box>
+                                <CurrencyExchangeIcon />
+                                <Subtitle component="div">24H Change</Subtitle>
+                                <BodyText>
+                                    {numberWithCommas(totalProfit.toFixed(2))}{' '}
+                                    <Typography variant="body2">USD</Typography>
+                                </BodyText>
+                            </Box>
+                            <Box
+                                color={totalProfit > 0 ? 'greenCl' : '#ea3943'}
+                                sx={{
+                                    display: 'flex',
+                                    fontSize: '14px',
+                                    fontWeight: '500',
+                                }}
+                            >
+                                <Typography variant="subtitle2">
+                                    {totalProfit > 0 ? '+' : '-'}
+                                    8,6 %
+                                </Typography>
+                            </Box>
+                        </CardContentStyled>
+                    </CardStyled>
+                </Grid>
+            </Grid>
+        </Box>
+        */

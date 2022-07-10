@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useContext } from 'react';
-import { CoinsContext } from '../../services/CryptoApiContext';
+import { AppContext } from '../../services/AppContext';
 
 import { Link } from 'react-router-dom';
 import {
@@ -22,7 +22,9 @@ import { links } from '../../data/data';
 import { BsFillSunFill, BsFillMoonStarsFill } from 'react-icons/bs';
 
 const DrawerMenu = () => {
-    const { drawer, setDrawer, mode, setMode } = useContext(CoinsContext);
+    const [link, setLink] = useState('Dashboard');
+
+    const { drawer, setDrawer, mode, setMode } = useContext(AppContext);
 
     const handleClose = () => {
         setDrawer(false);
@@ -36,7 +38,7 @@ const DrawerMenu = () => {
         <>
             <Drawer anchor="left" open={drawer} onClose={handleClose}>
                 <Box
-                    role="presentation"
+                    // role="presentation"
                     sx={{
                         p: '20px',
                         width: '250px',
@@ -55,13 +57,23 @@ const DrawerMenu = () => {
                                 mb: '16px',
                             }}
                         >
-                            <Box display="flex" alignItems="center">
-                                <Avatar src={logo} alt="Logo"></Avatar>
+                            <Box display="flex" gap="6px" alignItems="center">
+                                <Avatar
+                                    style={{ height: '36px', width: '36px' }}
+                                    src="https://images.ctfassets.net/q5ulk4bp65r7/1rFQCqoq8hipvVJSKdU3fQ/21ab733af7a8ab404e29b873ffb28348/coinbase-icon2.svg"
+                                    alt="Logo"
+                                ></Avatar>
 
-                                <Typography color="text.primary" variant="h6">
-                                    CoinGecko
+                                <Typography
+                                    color="text.primary"
+                                    variant="h6"
+                                    fontSize="18px"
+                                    fontWeight="600"
+                                >
+                                    CryptoMan
                                 </Typography>
                             </Box>
+
                             <Tooltip
                                 title={
                                     mode === 'light'
@@ -93,9 +105,24 @@ const DrawerMenu = () => {
                             {links.map((item) => (
                                 <ListItem
                                     key={item.title}
-                                    onClick={() => {}}
+                                    onClick={() => {
+                                        setLink(item.title);
+                                        setDrawer(false);
+                                    }}
                                     sx={{
                                         padding: '2px 0',
+                                        '.MuiListItemIcon-root': {
+                                            color:
+                                                item.title === link
+                                                    ? 'primary.main'
+                                                    : 'text.secondary',
+                                        },
+                                        '.MuiListItemText-root': {
+                                            color:
+                                                item.title === link
+                                                    ? 'primary.main'
+                                                    : 'text.secondary',
+                                        },
                                     }}
                                 >
                                     <Link
@@ -111,18 +138,12 @@ const DrawerMenu = () => {
                                                 '&.MuiListItemButton-root:hover': {
                                                     backgroundColor:
                                                         'background.paper',
-                                                    '.MuiListItemText-root': {
-                                                        color: 'primary.main',
-                                                    },
-                                                    '.MuiListItemIcon-root': {
-                                                        color: 'primary.main',
-                                                    },
                                                 },
                                             }}
                                         >
                                             <ListItemIcon
                                                 sx={{
-                                                    minWidth: '36px',
+                                                    minWidth: '34px',
                                                     color: 'text.secondary',
                                                 }}
                                             >
@@ -134,7 +155,7 @@ const DrawerMenu = () => {
                                                     color: 'text.secondary',
                                                     '.MuiListItemText-primary': {
                                                         fontWeight: '500',
-                                                        fontSize: '18px',
+                                                        fontSize: '16px',
                                                     },
                                                 }}
                                                 primary={item.title}

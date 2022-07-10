@@ -1,80 +1,46 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { AppContext } from '../services/AppContext';
 
-import { Box } from '@mui/material';
+import { Box, Typography, Breadcrumbs } from '@mui/material';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
-import Overview from '../components/Dashboard/Overview';
+import Statistics from '../components/Dashboard/Statistics';
 import PortfolioStats from '../components/Dashboard/PortfolioStats';
 import Market from '../components/Dashboard/Market';
-import { ThemeContext } from '@emotion/react';
+import Loader from '../components/Loader';
+import { getBreadcrumbs } from '../components/CardStyled';
 
 const Dashboard = () => {
+    const { portfolio } = useContext(AppContext);
+    if (!portfolio) return <Loader />;
+
+    const getStats = (value = portfolio) => {
+        const totalProfit = value
+            .map((coin) => coin.profit)
+            .reduce((acc, current) => acc + current, 0)
+            .toFixed(2);
+
+        const balance = value
+            .map((coin) => coin.totalValue)
+            .reduce((acc, current) => acc + current, 0)
+            .toFixed(2);
+
+        return {
+            totalProfit,
+            balance,
+        };
+    };
+
     return (
-        <Box flex={1} position="relative" mt="50px">
-            <Overview />
-            <PortfolioStats />
+        <Box flex={1} sx={{ mt: '10px' }}>
+            <Typography variant="h6" sx={{ mb: '14px' }}>
+                Dashboard
+            </Typography>
+            <PortfolioStats portfolio={portfolio} getStats={getStats} />
+            <Statistics portfolio={portfolio} getStats={getStats} />
             <Market />
         </Box>
     );
 };
 
 export default Dashboard;
-
-/////////////////////////////// Original
-/*
-const Home = () => {
-    const [coins, setCoins] = useState([])
-    const [search, setSearch] = useState('')
-
-    useEffect(() => {
-        axios
-            .get(
-                'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false',
-            )
-            .then((res) => {
-                setCoins(res.data)
-                console.log(res.data)
-            })
-            .catch((error) => console.log(error))
-    }, [])
-
-    const handleChange = (e) => {
-        setSearch(e.target.value)
-    }
-
-    const filteredCoins = coins.filter((coin) =>
-        coin.name.toLowerCase().includes(search.toLowerCase()),
-    )
-
-    return (
-        <div className="coin-app">
-            <div className="coin-search">
-                <h1 className="coin-text">Search a currency</h1>
-                <form>
-                    <input
-                        className="coin-input"
-                        type="text"
-                        onChange={handleChange}
-                        placeholder="Search"
-                    />
-                </form>
-            </div>
-            {filteredCoins.map((coin) => {
-                return (
-                    <Coin
-                        key={coin.id}
-                        name={coin.name}
-                        price={coin.current_price}
-                        symbol={coin.symbol}
-                        marketcap={coin.total_volume}
-                        volume={coin.market_cap}
-                        image={coin.image}
-                        priceChange={coin.price_change_percentage_24h}
-                    />
-                )
-            })}
-        </div>
-    )
-}
-
-export default Home
-*/

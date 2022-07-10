@@ -11,20 +11,18 @@ import {
     Typography,
     Paper,
     styled,
-    Divider,
 } from '@mui/material';
 import Badge from '@mui/material/Badge';
 
 import { BsSearch, BsFillSunFill, BsFillMoonStarsFill } from 'react-icons/bs';
 import { FaBell } from 'react-icons/fa';
 import MenuIcon from '@mui/icons-material/Menu';
-import logo from '../../assets/coingecko.png';
 
-import { CoinsContext } from '../../services/CryptoApiContext';
+import { AppContext } from '../../services/AppContext';
 import NavMenu from './NavMenu';
 
 const Navbar = () => {
-    const { setDrawer, mode, setMode } = useContext(CoinsContext);
+    const { setDrawer, mode, setMode } = useContext(AppContext);
 
     const handleActiveMenu = () => {
         setDrawer(true);
@@ -47,35 +45,48 @@ const Navbar = () => {
             sx={{
                 minHeight: '64px',
                 backgroundImage: 'none',
-                backgroundColor: 'background.default',
+                backgroundColor: 'background.paper',
                 boxShadow: 'none',
+                zIndex: 1000,
+                width: { xs: '100%', lg: 'calc(100% - 220px)' },
             }}
         >
             <Toolbar
                 sx={{
-                    padding: { xs: '0 14px', md: '0 24px' },
+                    padding: { xs: '0 4px', md: '0 16px', lg: '0 24px' },
                     justifyContent: 'space-between',
                 }}
             >
                 <Box sx={{ display: { xs: 'flex', lg: 'none' } }}>
                     <Tooltip title="Menu">
                         <IconButton onClick={handleActiveMenu}>
-                            <MenuIcon />
+                            <MenuIcon sx={{ height: '36px', width: '36px' }} />
                         </IconButton>
                     </Tooltip>
                 </Box>
 
-                <Box sx={{ display: 'flex', gap: '10px', pl: '16px' }}>
-                    <Link to="" style={{ textDecoration: 'none' }}>
-                        <Box display="flex" alignItems="center">
-                            <Avatar src={logo} alt="Logo"></Avatar>
+                <Box
+                    sx={{
+                        display: { xs: 'flex', lg: 'none' },
+                        gap: '6px',
+                        pl: '16px',
+                    }}
+                >
+                    <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+                        <Box display="flex" gap="6px" alignItems="center">
+                            <Avatar
+                                style={{ height: '36px', width: '36px' }}
+                                src="https://images.ctfassets.net/q5ulk4bp65r7/1rFQCqoq8hipvVJSKdU3fQ/21ab733af7a8ab404e29b873ffb28348/coinbase-icon2.svg"
+                                alt="Logo"
+                            ></Avatar>
 
                             <Typography
                                 color="text.primary"
                                 variant="h6"
                                 fontSize="18px"
+                                fontWeight="600"
                             >
-                                CoinGecko
+                                CryptoMan
                             </Typography>
                         </Box>
                     </Link>
@@ -90,24 +101,26 @@ const Navbar = () => {
                         flex: '3',
                         boxShadow: 'none',
                         display: { xs: 'none', lg: 'flex' },
-                        backgroundColor: 'background.paper',
+                        backgroundColor: 'background.default',
+                        backgroundImage: 'none',
                     }}
                 >
-                    <InputBase
-                        sx={{
-                            flex: 1,
-                            p: '4px 0 4px 20px',
-                        }}
-                        placeholder="Search crypto"
-                        inputProps={{ 'aria-label': 'search crypto' }}
-                    />
                     <IconButton
                         type="submit"
-                        sx={{ width: '38px', height: '38px', p: '10px' }}
+                        sx={{ width: '40px', height: '40px', p: '10px' }}
                         aria-label="search"
                     >
                         <BsSearch />
                     </IconButton>
+                    <InputBase
+                        sx={{
+                            flex: 1,
+                            ml: 1,
+                            fontSize: '14px',
+                        }}
+                        placeholder="Search crypto"
+                        inputProps={{ 'aria-label': 'search crypto' }}
+                    />
                 </Paper>
 
                 <Box
@@ -116,7 +129,8 @@ const Navbar = () => {
                     <IconButton
                         sx={{
                             display: {
-                                xs: 'flex',
+                                xs: 'none',
+                                sm: 'flex',
                                 lg: 'none',
                                 width: '34px',
                                 height: '34px',
@@ -169,7 +183,7 @@ const Navbar = () => {
                     <NavMenu />
                 </Box>
             </Toolbar>
-            <Divider />
+            {/* <Divider /> */}
         </AppBar>
     );
 };

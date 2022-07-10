@@ -14,7 +14,6 @@ const Chart = ({ coin, id }) => {
     const [chartData, setChartData] = useState();
     const [charts, setCharts] = useState(1);
     const [days, setDays] = useState(1);
-
     const BoxChart = styled(Box)(() => ({
         width: '100%',
         display: 'flex',
