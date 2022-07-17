@@ -78,8 +78,7 @@ export const links = [
     },
 ];
 
-{
-    /* <div className="mt-10 ">
+/* <div className="mt-10 ">
 {links.map((item) => (
   <div key={item.title}>
     <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
@@ -102,7 +101,6 @@ export const links = [
   </div>
 ))}
 </div> */
-}
 
 export const porfolioChart = [
     {
@@ -127,5 +125,21 @@ export const porfolioChart = [
     {
         label: '1Y',
         value: 365,
+    },
+];
+
+export const coinTrackInitial = [
+    {
+        id: 'btc',
+        name: 'Bitcoin',
+        currentPrice: '',
+        date: 'Fri Jul 15 2022',
+        action: 'BUY',
+
+        quantity: 1.63,
+        cost: 15000,
+        price: 20000,
+        proceeds: '',
+        profit: '',
     },
 ];

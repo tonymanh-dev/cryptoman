@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetCryptosQuery } from '../services/cryptoApi';
 import { FaRegStar } from 'react-icons/fa';
@@ -14,7 +13,6 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Typography,
     Paper,
     Table,
     TableBody,
@@ -22,14 +20,16 @@ import {
     styled,
     Pagination,
     Breadcrumbs,
+    TextField,
 } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import {
-    getBreadcrumbs,
     TableCellStyled,
-    SubtitleTable1,
-    SubtitleTable2,
-} from '../components/CardStyled';
+    SubTable1,
+    SubTable2,
+    TextLink,
+    TextLink2,
+} from '../components/MuiCustom';
 
 const Container = styled(Box)(({ theme }) => ({
     [theme.breakpoints.down('lg')]: {
@@ -37,13 +37,8 @@ const Container = styled(Box)(({ theme }) => ({
     },
 }));
 
-const TypoStyled = styled(Typography)(({ theme }) => ({
-    ...theme.typography.subtitle1,
-    fontWeight: '400',
-}));
-
 export const numberWithCommas = (number) => {
-    if (!number) return '--';
+    if (!number) return '-';
 
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
@@ -56,13 +51,13 @@ const Market = () => {
 
     if (isFetching) return <Loader />;
 
-    // const handleSearch = () => {
-    //     return data.filter(
-    //         (coin) =>
-    //             coin.name.toLowerCase().includes(search) ||
-    //             coin.symbol.toLowerCase().includes(search),
-    //     );
-    // };
+    const handleSearch = () => {
+        return data.filter(
+            (coin) =>
+                coin.name.toLowerCase().includes(search) ||
+                coin.symbol.toLowerCase().includes(search),
+        );
+    };
 
     return (
         <Container sx={{ width: '100%', mt: '10px' }}>
@@ -70,10 +65,22 @@ const Market = () => {
                 sx={{ mb: '14px' }}
                 separator={<NavigateNextIcon fontSize="small" />}
             >
-                {getBreadcrumbs('/market', 'Home', 'Market')}
+                <TextLink
+                    underline="hover"
+                    onClick={() => navigate('/dashboard')}
+                >
+                    Home
+                </TextLink>
+                <TextLink2>Market</TextLink2>
             </Breadcrumbs>
             <CryptoStats />
-
+            <Box sx={{ m: '24px 0' }}>
+                <TextField
+                    label="Search crypto"
+                    variant="standard"
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+            </Box>
             <TableContainer
                 component={Paper}
                 sx={{
@@ -122,7 +129,7 @@ const Market = () => {
 
                         {/* Table Row */}
                         <TableBody>
-                            {data
+                            {handleSearch()
                                 .slice((page - 1) * 20, (page - 1) * 20 + 20)
                                 .map((coin) => {
                                     const priceUp =
@@ -159,17 +166,15 @@ const Market = () => {
                                                         }}
                                                         onClick={() => {}}
                                                     />
-                                                    <SubtitleTable1>
+                                                    <SubTable1>
                                                         {coin.market_cap_rank}
-                                                    </SubtitleTable1>
+                                                    </SubTable1>
                                                 </Box>
                                             </TableCellStyled>
                                             <TableCellStyled
                                                 align="right"
                                                 onClick={() =>
-                                                    navigate(
-                                                        `/coins/${coin.id}`,
-                                                    )
+                                                    navigate(`/coin/${coin.id}`)
                                                 }
                                                 sx={{
                                                     cursor: 'pointer',
@@ -190,28 +195,28 @@ const Market = () => {
                                                             mr: '10px',
                                                         }}
                                                     />
-                                                    <SubtitleTable1>
+                                                    <SubTable1>
                                                         {coin.name}
-                                                    </SubtitleTable1>
+                                                    </SubTable1>
                                                 </Box>
                                             </TableCellStyled>
                                             <TableCellStyled align="left">
-                                                <SubtitleTable2>
+                                                <SubTable2>
                                                     {coin.symbol.toUpperCase()}
-                                                </SubtitleTable2>
+                                                </SubTable2>
                                             </TableCellStyled>
                                             <TableCellStyled align="right">
-                                                <SubtitleTable1>
+                                                <SubTable1>
                                                     $
                                                     {numberWithCommas(
                                                         coin.current_price.toFixed(
                                                             2,
                                                         ),
                                                     )}
-                                                </SubtitleTable1>
+                                                </SubTable1>
                                             </TableCellStyled>
                                             <TableCellStyled align="right">
-                                                <SubtitleTable1
+                                                <SubTable1
                                                     sx={{
                                                         color: priceUp
                                                             ? 'greenCl'
@@ -223,23 +228,23 @@ const Market = () => {
                                                         2,
                                                     )}
                                                     %
-                                                </SubtitleTable1>
+                                                </SubTable1>
                                             </TableCellStyled>
                                             <TableCellStyled align="right">
-                                                <SubtitleTable1>
+                                                <SubTable1>
                                                     $
                                                     {numberWithCommas(
                                                         coin.total_volume.toFixed(),
                                                     )}
-                                                </SubtitleTable1>
+                                                </SubTable1>
                                             </TableCellStyled>
                                             <TableCellStyled align="right">
-                                                <SubtitleTable1>
+                                                <SubTable1>
                                                     $
                                                     {numberWithCommas(
                                                         coin.market_cap,
                                                     )}
-                                                </SubtitleTable1>
+                                                </SubTable1>
                                             </TableCellStyled>
                                         </TableRow>
                                     );

@@ -1,15 +1,10 @@
-import React, { useState, useContext } from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import AddIcon from '@mui/icons-material/Add';
-import Tab from '@mui/material/Tab';
+import React, { useState } from 'react';
+
+import { styled, Box, Button, Typography, Modal, Tab } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import CloseIcon from '@mui/icons-material/Close';
-import { styled } from '@mui/material';
 
 import Form from './Form';
 import Transfer from './Transfer';
@@ -22,8 +17,8 @@ const BoxStyled = styled(Box)(({ theme }) => ({
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 500,
-    height: '550px',
-    padding: '24px',
+    height: '600px',
+    padding: '16px 24px',
     boxShadow: theme.shadows[4],
     borderRadius: '10px',
     backgroundColor: theme.palette.background.paper,
@@ -40,14 +35,7 @@ const TabPanelStyled = styled(TabPanel)(() => ({
 }));
 
 // Main function Modal
-const ModalForm = ({
-    data,
-    currentCoin,
-    // currentPrice,
-    openModal,
-    handleCloseModal,
-    handleToast,
-}) => {
+const ModalForm = ({ data, openModal, handleCloseModal, handleToast }) => {
     const [value, setValue] = useState('BUY');
 
     // Handle tab action Buy, Sell, Transfer
@@ -63,10 +51,11 @@ const ModalForm = ({
                         sx={{
                             display: 'flex',
                             justifyContent: 'space-between',
+                            m: '0 24px',
                         }}
                     >
                         <Typography variant="h5" fontWeight="500">
-                            Add transaction
+                            Add Transaction
                         </Typography>
                         <Button
                             sx={{
@@ -86,6 +75,7 @@ const ModalForm = ({
                                 sx={{
                                     borderBottom: 1,
                                     borderColor: 'divider',
+                                    m: '0 24px',
                                 }}
                             >
                                 <TabList
@@ -109,10 +99,13 @@ const ModalForm = ({
                                 <TabPanelStyled value={action} key={action}>
                                     {action === 'TRANSFER' ? (
                                         <Transfer
+                                            action={action}
+                                            handleToast={handleToast}
                                             handleCloseModal={handleCloseModal}
                                         />
                                     ) : (
                                         <Form
+                                            action={action}
                                             data={data}
                                             handleCloseModal={handleCloseModal}
                                             handleToast={handleToast}

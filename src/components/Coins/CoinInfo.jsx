@@ -38,7 +38,9 @@ const CoinInfo = ({ data, id }) => {
         margin: '10px 0',
         '.MuiLinearProgress-barColorPrimary': {
             backgroundColor: '',
-            backgroundImage: 'linear-gradient(to right, #afe15d, #39b385)',
+            backgroundImage: 'linear-gradient(to right, #7e84ff, #9be15d)',
+            // backgroundColor: theme.palette.primary.main,
+            // backgroundImage: 'linear-gradient(to right, #afe15d, #39b385)',
         },
         [`&.${linearProgressClasses.colorPrimary}`]: {
             backgroundColor:
@@ -169,8 +171,8 @@ const CoinInfo = ({ data, id }) => {
                             }}
                             backgroundColor={
                                 data.market_data.price_change_percentage_24h > 0
-                                    ? 'primary.main'
-                                    : '#ea3943'
+                                    ? 'greenCl'
+                                    : 'redCl'
                             }
                         >
                             <Box

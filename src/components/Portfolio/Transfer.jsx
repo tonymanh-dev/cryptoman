@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { Avatar, Button, Typography } from '@mui/material';
+import { Avatar, Button, Typography, Paper } from '@mui/material';
 import TimePicker from './TimePicker';
 
 import { AppContext } from '../../services/AppContext';
@@ -61,22 +61,33 @@ const titleForm = {
     fontSize: '14px',
 };
 
-const Transfer = ({ handleCloseModal }) => {
-    const [coin, setCoin] = useState('');
-    const [transfer, setTransfer] = useState('IN');
+const Transfer = ({ handleCloseModal, handleToast }) => {
+    const [pricePerCoin, setPricePerCoin] = useState();
+    const [value, setValue] = useState(new Date());
+
+    const [formData, setFormData] = useState({
+        coinInput: '',
+        transfer: 'OUT',
+        quantity: '',
+        totalValue: '',
+        time: value,
+    });
+
     const { portfolio } = useContext(AppContext);
 
-    const handleChange = (e) => {
-        setCoin(e.target.value);
-    };
-
-    const handleChangeTransfer = (e) => {
-        setTransfer(e.target.value);
+    const handleChangeForm = (e) => {
+        setFormData((prevForm) => {
+            const { name, value } = e.target;
+            return {
+                ...prevForm,
+                [name]: value,
+            };
+        });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        handleToast('Transaction successfully!');
         handleCloseModal();
     };
 
@@ -94,14 +105,14 @@ const Transfer = ({ handleCloseModal }) => {
                     Coins
                 </Typography>
                 <TextField
-                    id="outlined-select-currency-native"
                     select
-                    value={coin}
-                    onChange={handleChange}
                     sx={formStyle}
+                    onChange={handleChangeForm}
+                    value={formData.coinInput}
+                    name="coinInput"
                 >
                     {portfolio.map((option) => (
-                        <MenuItem key={option.symbol} value={option.name}>
+                        <MenuItem key={option.symbol} value={option}>
                             <Box
                                 sx={{
                                     display: 'flex',
@@ -130,13 +141,14 @@ const Transfer = ({ handleCloseModal }) => {
                 <TextField
                     id="filled-select-currency-native"
                     select
-                    value={transfer}
-                    onChange={handleChangeTransfer}
                     SelectProps={{
                         native: true,
                     }}
                     variant="filled"
                     sx={styleFormFilled}
+                    value={formData.transfer}
+                    onChange={handleChangeForm}
+                    name="transfer"
                 >
                     {transfers.map((option) => (
                         <option key={option.value} value={option.value}>
@@ -154,14 +166,49 @@ const Transfer = ({ handleCloseModal }) => {
                     variant="outlined"
                     type="number"
                     sx={formStyle}
+                    onChange={handleChangeForm}
+                    value={formData.quantity}
+                    name="quantity"
                 />
             </Box>
             <Box>
-                <TimePicker formStyle={formStyle} />
+                <TimePicker
+                    formStyle={formStyle}
+                    value={value}
+                    onChange={(newValue) => {
+                        setValue(newValue);
+                    }}
+                    name="time"
+                />
             </Box>
+            {/* <Box>
+                <Typography variant="h5" sx={titleForm}>
+                    Total Value
+                </Typography>
+                <Paper
+                    sx={{
+                        height: '54px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        mb: '24px',
+                        boxShadow: 'none',
+                        borderRadius: '10px',
+                        mt: '6px',
+                    }}
+                >
+                    <Typography
+                        variant="h6"
+                        sx={{ fontSize: '20px', p: '0 14px' }}
+                    >
+                        ${formData.totalValue}
+                    </Typography>
+                </Paper>
+            </Box> */}
 
             <Button
-                disabled={coin ? false : true}
+                disabled={
+                    formData.coinInput && formData.quantity ? false : true
+                }
                 variant="contained"
                 sx={{
                     height: '46px',

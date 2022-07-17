@@ -10,17 +10,18 @@ import { Chart as ChartJS, registerables } from 'chart.js';
 import TimeButton from './TimeButton';
 ChartJS.register(...registerables);
 
+const BoxChart = styled(Box)(() => ({
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'inherit',
+}));
+
 const Chart = ({ coin, id }) => {
     const [chartData, setChartData] = useState();
     const [charts, setCharts] = useState(1);
     const [days, setDays] = useState(1);
-    const BoxChart = styled(Box)(() => ({
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        color: 'inherit',
-    }));
 
     const fetchMarketChart = async () => {
         const { data } = await axios.get(marketChart(id, days));
@@ -89,8 +90,9 @@ const Chart = ({ coin, id }) => {
                                 let date = new Date(coin[0]);
                                 let time =
                                     date.getHours() > 12
-                                        ? `${date.getHours() -
-                                              12}:${date.getMinutes()} PM`
+                                        ? `${
+                                              date.getHours() - 12
+                                          }:${date.getMinutes()} PM`
                                         : `${date.getHours()}:${date.getMinutes()} AM`;
                                 return days === 1
                                     ? time

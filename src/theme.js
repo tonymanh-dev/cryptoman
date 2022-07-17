@@ -6,7 +6,9 @@ const customTheme = (mode) => ({
                   // palette values for Light mode
                   primary: {
                       //   main: '#0ecb81',
-                      main: '#6246ea',
+                      //   main: '#6246ea',
+                      //   main: '#646CFF',
+                      main: '#7e84ff',
                   },
                   secondary: {
                       main: '#9be15d',

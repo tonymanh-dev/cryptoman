@@ -9,14 +9,15 @@ import { Avatar, Button, Typography, Stack, Paper } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
-import { FourGMobiledataOutlined } from '@mui/icons-material';
 
 // Custom style MUI
 const formStyle = {
     '& .MuiOutlinedInput-root': {
         borderRadius: '10px',
         width: '100%',
-        maxHeight: '44px',
+        maxHeight: '40px',
+        borderColor: 'transparent',
+        backgroundColor: 'background.default',
     },
     '& .MuiOutlinedInput-root:hover': {
         '& > fieldset': {
@@ -24,30 +25,6 @@ const formStyle = {
         },
     },
 };
-// const styleFormFilled = {
-//     '& .MuiFilledInput-root': {
-//         borderRadius: '10px',
-//         width: '100%',
-//     },
-//     '& .MuiFilledInput-input': {
-//         padding: '14px',
-//         fontSize: '20px',
-//         fontWeight: 500,
-//         height: '30px',
-//     },
-//     '& .MuiFilledInput-root:before': {
-//         borderBottom: 'none',
-//     },
-//     '& .MuiFilledInput-root:after': {
-//         borderBottom: 'none',
-//     },
-//     '& .MuiFilledInput-root:hover:not(.Mui-disabled):before': {
-//         borderBottom: 'none',
-//     },
-//     '& .MuiFilledInput-root:hover:not(.Mui-disabled):after': {
-//         borderBottom: 'none',
-//     },
-// };
 
 const titleForm = {
     fontWeight: '500',
@@ -55,75 +32,145 @@ const titleForm = {
 };
 
 // Main function Modal's Form
-const Form = ({ data, handleCloseModal, handleToast }) => {
-    const [value, setValue] = useState(new Date());
+const Form = ({ data, handleCloseModal, handleToast, action }) => {
+    const [dateValue, setDateValue] = useState(new Date().toUTCString());
     const [pricePerCoin, setPricePerCoin] = useState();
-
     const [formData, setFormData] = useState({
         coinInput: '',
         priceInput: '',
         quantity: '',
-        spent: '',
-        time: value,
+        totalValue: '',
+        time: dateValue,
     });
 
-    // console.log(formData);
+    const { coinForm, setCoinForm, portfolio, setCoinTrack } =
+        useContext(AppContext);
 
-    const { portfolio, coinForm, setCoinForm } = useContext(AppContext);
+    // Variable to use below
+    const COIN = formData.coinInput;
+    const ACTION = action === 'BUY';
+    const balance = portfolio.find(
+        (coin) => coin.symbol === formData.coinInput.symbol,
+    );
+    const coinSymbol = formData.coinInput.symbol;
 
-    const handleChange = (e) => {
+    // Calculate spent
+    formData.totalValue = formData.priceInput * formData.quantity;
+
+    // Take input value to formData state
+    const handleChangeForm = (e) => {
         setPricePerCoin(e.target.value.current_price);
 
         setFormData((prevForm) => {
+            const { name, value } = e.target;
             return {
                 ...prevForm,
-                [e.target.name]: e.target.value,
-
-                spent: formData.priceInput * formData.quantity,
+                [name]: value,
             };
         });
+    };
+    console.log(COIN.id);
+
+    //Handle add new coin
+    const handleAddNewCoin = () => {
+        setCoinForm((prevCoin) => {
+            return [
+                ...prevCoin,
+
+                // Update new object
+                {
+                    id: COIN.id,
+                    name: COIN.name,
+                    symbol: COIN.symbol,
+                    image: COIN.image,
+                    currentPrice: COIN.current_price,
+                    time: [formData.time],
+                    action: [action],
+
+                    quantity: [Number(formData.quantity)],
+                    cost: [Number(formData.totalValue)],
+
+                    price: [Number(formData.priceInput)], //Price per coin
+                    proceeds: [0], //Update in Sell action
+                    profit: [],
+                },
+            ];
+        });
+    };
+
+    // Handle update coin
+    const handleUpdateCoin = () => {
+        setCoinForm(
+            coinForm.map((data) =>
+                // Check condition
+                data.symbol === COIN.symbol
+                    ? {
+                          ...data,
+                          action: [...data.action, ACTION ? 'BUY' : 'SELL'],
+                          time: [...data.time, formData.time],
+                          quantity: [
+                              ...data.quantity,
+                              Number(
+                                  ACTION
+                                      ? formData.quantity
+                                      : -formData.quantity,
+                              ),
+                          ],
+                          cost: [
+                              ...data.cost,
+                              Number(ACTION ? formData.totalValue : ''),
+                          ], //Total totalValue
+
+                          price: [...data.price, Number(formData.priceInput)], //Price per coin
+
+                          proceeds: [
+                              ...data.proceeds,
+                              Number(ACTION ? '' : formData.totalValue),
+                          ], //Update in Sell action
+
+                          profit: [],
+                      }
+                    : { ...data },
+            ),
+        );
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // portfolio.map((coinData) => {
-        //     coinData.symbol === formData.coinInput.symbol;
-        // });
+        // Check action to update portfolio data
+        const isUpdate = coinForm.find((data) => data.id === COIN.id);
+        isUpdate ? handleUpdateCoin() : handleAddNewCoin();
 
-        const coin = formData.coinInput;
-
-        const spentArr = [];
-        spentArr.push(formData.spent);
-
-        const quantityArr = [];
-        quantityArr.push(Number(formData.quantity));
-
-        // Handle add new coin
-        setCoinForm((prevCoin) => {
+        // Data for only render detail portfolio coin
+        setCoinTrack((prev) => {
             return [
-                ...prevCoin,
+                ...prev,
 
-                // New object
                 {
-                    id: coin.symbol,
-                    name: coin.name,
-                    symbol: coin.symbol,
-                    image: coin.image,
-                    currentPrice: coin.current_price,
+                    id: COIN.id,
+                    symbol: COIN.symbol,
+                    name: COIN.name,
+                    currentPrice: COIN.current_price,
+                    date: formData.time.toString(),
+                    action: action,
 
-                    quantity: quantityArr,
-                    spents: spentArr,
-                    time: formData.time,
+                    quantity: Number(
+                        ACTION ? formData.quantity : -formData.quantity,
+                    ),
+                    cost: Number(ACTION ? formData.totalValue : ''),
+                    price: Number(formData.priceInput),
+                    proceeds: Number(ACTION ? '' : formData.totalValue),
+                    profit: '',
                 },
             ];
         });
 
+        // Handle action modal and toast
         handleCloseModal();
         handleToast('Transaction successfully!');
     };
 
-    console.log(portfolio);
     return (
         <>
             <Box
@@ -132,18 +179,17 @@ const Form = ({ data, handleCloseModal, handleToast }) => {
                     '& .MuiTextField-root': {
                         width: '100%',
                         margin: '4px 0 14px',
-                        bgcolor: 'primary.paper',
                     },
                 }}
                 noValidate={false}
             >
                 <Box>
                     <Typography variant="h5" sx={titleForm}>
-                        Coins
+                        Coin
                     </Typography>
                     <TextField
                         select
-                        onChange={handleChange}
+                        onChange={handleChangeForm}
                         sx={formStyle}
                         value={formData.coinInput}
                         name="coinInput"
@@ -171,42 +217,69 @@ const Form = ({ data, handleCloseModal, handleToast }) => {
                         ))}
                     </TextField>
                 </Box>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                    }}
-                >
-                    <Box>
+
+                <Box>
+                    <Stack
+                        direction="row"
+                        sx={{
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                        }}
+                    >
                         <Typography variant="h5" sx={titleForm}>
                             Price Per Coin
                         </Typography>
-                        <TextField
-                            variant="outlined"
-                            type="number"
-                            inputProps={{
-                                inputMode: 'numeric',
-                                pattern: '[0-9]*',
-                            }}
-                            onChange={handleChange}
-                            sx={formStyle}
-                            value={pricePerCoin}
-                            name="priceInput"
-                        />
-                    </Box>
-                    <Box>
+                        <Typography
+                            variant="h5"
+                            sx={{ fontSize: '14px', fontWeight: '400' }}
+                        >
+                            {/* Current Price: ${pricePerCoin} */}
+                        </Typography>
+                    </Stack>
+
+                    {/* Fix update current price form */}
+                    <TextField
+                        variant="outlined"
+                        type="number"
+                        inputProps={{
+                            inputMode: 'numeric',
+                            pattern: '[0-9]*',
+                        }}
+                        onChange={handleChangeForm}
+                        sx={formStyle}
+                        value={pricePerCoin}
+                        name="priceInput"
+                    />
+                </Box>
+                <Box>
+                    <Stack
+                        direction="row"
+                        sx={{
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                        }}
+                    >
                         <Typography variant="h5" sx={titleForm}>
                             Quantity
                         </Typography>
-                        <TextField
-                            variant="outlined"
-                            type="number"
-                            sx={formStyle}
-                            onChange={handleChange}
-                            value={formData.quantity}
-                            name="quantity"
-                        />
-                    </Box>
+                        {!ACTION && balance && (
+                            <Typography
+                                variant="h5"
+                                sx={{ fontSize: '14px', fontWeight: '400' }}
+                            >
+                                Balance: {balance.quantity}{' '}
+                                {coinSymbol && coinSymbol.toUpperCase()}
+                            </Typography>
+                        )}
+                    </Stack>
+                    <TextField
+                        variant="outlined"
+                        type="number"
+                        sx={formStyle}
+                        onChange={handleChangeForm}
+                        value={formData.quantity}
+                        name="quantity"
+                    />
                 </Box>
 
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -222,9 +295,9 @@ const Form = ({ data, handleCloseModal, handleToast }) => {
                             renderInput={(params) => (
                                 <TextField sx={formStyle} {...params} />
                             )}
-                            value={value}
+                            value={dateValue}
                             onChange={(newValue) => {
-                                setValue(newValue);
+                                setDateValue(newValue);
                             }}
                             name="time"
                         />
@@ -232,24 +305,24 @@ const Form = ({ data, handleCloseModal, handleToast }) => {
                 </LocalizationProvider>
                 <Box>
                     <Typography variant="h5" sx={titleForm}>
-                        Total Spent
+                        {ACTION ? 'Total Spent' : 'Total Received'}
                     </Typography>
                     <Paper
                         sx={{
                             height: '54px',
                             display: 'flex',
                             alignItems: 'center',
-                            mb: '24px',
+                            m: '6px 0 20px 0',
                             boxShadow: 'none',
                             borderRadius: '10px',
-                            mt: '6px',
+                            backgroundColor: 'background.default',
                         }}
                     >
                         <Typography
                             variant="h6"
                             sx={{ fontSize: '20px', p: '0 14px' }}
                         >
-                            ${formData.spent}
+                            ${formData.totalValue}
                         </Typography>
                     </Paper>
                 </Box>

@@ -1,4 +1,6 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { useGetCryptosQuery } from '../services/cryptoApi';
 import { AppContext } from '../services/AppContext';
 
@@ -7,33 +9,60 @@ import Coins from '../components/Portfolio/Coins';
 import ModalForm from '../components/Portfolio/Modal';
 import Stats from '../components/Portfolio/Stats';
 import Loader from '../components/Loader';
-import { Box, Button, Stack, TextField, Breadcrumbs } from '@mui/material';
+import {
+    Box,
+    Button,
+    Stack,
+    TextField,
+    Breadcrumbs,
+    Link,
+    Typography,
+} from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { getBreadcrumbs } from '../components/CardStyled';
+import { TextLink, TextLink2 } from '../components/MuiCustom';
 
 const Portfolio = () => {
-    const [openModal, setOpenModal] = useState(false);
-    const { data } = useGetCryptosQuery(10);
+    // const [openModal, setOpenModal] = useState(false);
 
-    // Data for Modal
-    if (!data) return <Loader />;
+    const [search, setSearch] = useState('');
+    const { portfolio, modalTransaction, setModalTransaction } =
+        useContext(AppContext);
+    const { data } = useGetCryptosQuery(20);
+    const navigate = useNavigate();
+
+    if (!data && !portfolio) return <Loader />;
+
+    const handleSearchCoin = (data) => {
+        return portfolio.filter(
+            (coin) =>
+                coin.name.toLowerCase().includes(search) ||
+                coin.symbol.toLowerCase().includes(search),
+        );
+    };
 
     const handleOpenModal = () => {
-        setOpenModal(true);
+        setModalTransaction(true);
     };
     const handleCloseModal = () => {
-        setOpenModal(false);
+        setModalTransaction(false);
     };
 
     return (
-        <Box mt="10px" position="relative" flex={1}>
+        <Box mt="10px" position="relative" flex={1} sx={{ height: '100vh' }}>
             <Breadcrumbs
                 sx={{ mb: '14px' }}
                 separator={<NavigateNextIcon fontSize="small" />}
             >
-                {getBreadcrumbs('/portfolio', 'Home', 'Porfolio')}
+                <TextLink
+                    underline="hover"
+                    onClick={() => navigate('/dashboard')}
+                >
+                    Home
+                </TextLink>
+
+                <TextLink2>Portfolio</TextLink2>
             </Breadcrumbs>
-            <Stats />
+            <Stats portfolio={portfolio} />
             <Stack
                 direction="row"
                 sx={{
@@ -53,9 +82,9 @@ const Portfolio = () => {
                     autoComplete="off"
                 >
                     <TextField
-                        id="standard-basic"
                         label="Search your asset"
                         variant="standard"
+                        onChange={(e) => setSearch(e.target.value)}
                     />
                 </Box>
                 <Button
@@ -74,11 +103,14 @@ const Portfolio = () => {
             <ModalForm
                 handleToast={handleToast}
                 data={data}
-                openModal={openModal}
+                openModal={modalTransaction}
                 handleCloseModal={handleCloseModal}
             />
 
-            <Coins handleToast={handleToast} />
+            <Coins
+                handleToast={handleToast}
+                handleSearchCoin={handleSearchCoin}
+            />
             <Toast />
         </Box>
     );

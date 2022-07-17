@@ -28,7 +28,7 @@ const PortfolioStats = ({ getStats }) => {
                                     Total Balance
                                 </Subtitle>
                                 <BodyText>
-                                    {numberWithCommas(balance)}{' '}
+                                    {balance}{' '}
                                     <Typography variant="body2">USD</Typography>
                                 </BodyText>
                             </Box>
@@ -57,13 +57,13 @@ const PortfolioStats = ({ getStats }) => {
                                     Total Profit
                                 </Subtitle>
                                 <BodyText>
-                                    {numberWithCommas(totalProfit)}{' '}
+                                    {totalProfit}{' '}
                                     <Typography variant="body2">USD</Typography>
                                 </BodyText>
                             </Box>
 
                             <Box
-                                color={totalProfit > 0 ? 'greenCl' : '#ea3943'}
+                                color={totalProfit > 0 ? 'greenCl' : 'redCl'}
                                 sx={{
                                     display: 'flex',
                                     fontSize: '14px',
@@ -94,12 +94,12 @@ const PortfolioStats = ({ getStats }) => {
                                 <CurrencyExchangeIcon />
                                 <Subtitle component="div">24H Change</Subtitle>
                                 <BodyText>
-                                    {numberWithCommas(totalProfit)}{' '}
+                                    {totalProfit}{' '}
                                     <Typography variant="body2">USD</Typography>
                                 </BodyText>
                             </Box>
                             <Box
-                                color={totalProfit > 0 ? 'greenCl' : '#ea3943'}
+                                color={totalProfit > 0 ? 'greenCl' : 'redCl'}
                                 sx={{
                                     display: 'flex',
                                     fontSize: '14px',
@@ -108,7 +108,7 @@ const PortfolioStats = ({ getStats }) => {
                             >
                                 <Typography variant="subtitle2">
                                     {totalProfit > 0 ? '+' : '-'}
-                                    8,6 %
+                                    1,2 %
                                 </Typography>
                             </Box>
                         </CardContentStyled>

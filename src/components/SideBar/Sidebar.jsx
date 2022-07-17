@@ -94,7 +94,6 @@ const Sidebar = () => {
                                             <ListItemIcon
                                                 sx={{
                                                     minWidth: '34px',
-                                                    '.MuiListItemIcon-root': {},
                                                 }}
                                             >
                                                 {item.icon}
@@ -102,10 +101,11 @@ const Sidebar = () => {
 
                                             <ListItemText
                                                 sx={{
-                                                    '.MuiListItemText-primary': {
-                                                        fontWeight: '500',
-                                                        fontSize: '16px',
-                                                    },
+                                                    '.MuiListItemText-primary':
+                                                        {
+                                                            fontWeight: '500',
+                                                            fontSize: '16px',
+                                                        },
                                                 }}
                                                 primary={item.title}
                                             />

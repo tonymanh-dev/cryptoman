@@ -1,34 +1,26 @@
-import React, { useContext } from 'react';
-import { AppContext } from '../../services/AppContext';
+import React from 'react';
 import { numberWithCommas } from '../../pages/Market';
 
-import { Box, Paper, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import {
     CardStyled,
     CardContentStyled,
     Subtitle,
     NumberText,
-} from '../CardStyled';
-import Loader from '../Loader';
+} from '../MuiCustom';
 
-const Stats = () => {
-    const { portfolio } = useContext(AppContext);
-    if (!portfolio) return <Loader />;
-
+const Stats = ({ portfolio }) => {
     // Get portfolio stats value
     const totalProfit = portfolio
         .map((coin) => coin.profit)
-        .reduce((prevProfit, currentProfit) => prevProfit + currentProfit, 0);
+        .reduce((acc, cur) => acc + cur, 0);
 
     const balance = portfolio
         .map((coin) => coin.totalValue)
-        .reduce((prevCoin, currentCoin) => prevCoin + currentCoin, 0);
+        .reduce((acc, cur) => acc + cur, 0);
 
-    const stableCoin = portfolio
-        .filter((coin) => {
-            return coin.symbol === 'usdc' || coin.symbol === 'usdt';
-        })
-        .map((coin) => coin.totalValue)
+    const totalCost = portfolio
+        .map((coin) => coin.totalCost)
         .reduce((acc, cur) => acc + cur, 0);
 
     return (
@@ -65,9 +57,9 @@ const Stats = () => {
                 >
                     <CardStyled>
                         <CardContentStyled>
-                            <Subtitle component="div">24H Change</Subtitle>
+                            <Subtitle component="div">Total Cost</Subtitle>
                             <NumberText>
-                                {numberWithCommas(totalProfit.toFixed(2))}{' '}
+                                {numberWithCommas(totalCost.toFixed(2))}{' '}
                                 <Typography variant="body2">USD</Typography>
                             </NumberText>
                         </CardContentStyled>
@@ -84,7 +76,7 @@ const Stats = () => {
                         <CardContentStyled>
                             <Subtitle component="div">Stable Coin</Subtitle>
                             <NumberText>
-                                {numberWithCommas(stableCoin.toFixed(2))}{' '}
+                                2,300{' '}
                                 <Typography variant="body2">USD</Typography>
                             </NumberText>
                         </CardContentStyled>

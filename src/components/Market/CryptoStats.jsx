@@ -6,13 +6,13 @@ import DomStats from './DomStats';
 import Loader from '../Loader';
 import { numberWithCommas } from '../../pages/Market';
 
-import { Box, Grid, Typography, Paper, styled } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import {
     CardStyled,
     CardContentStyled,
     Subtitle,
     NumberText,
-} from '../CardStyled';
+} from '../MuiCustom';
 
 const CryptoStats = () => {
     const { data } = useGetMarketCapQuery(10);

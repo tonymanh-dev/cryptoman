@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react';
-import { AppContext } from '../../services/AppContext';
+import React from 'react';
 
 import {
     Table,
@@ -13,18 +12,14 @@ import {
 
 import Row from './Row';
 
-const Coins = ({ handleToast }) => {
-    const { portfolio } = useContext(AppContext);
-
+const Coins = ({ handleToast, handleSearchCoin }) => {
     return (
         <TableContainer
             component={Paper}
             sx={{
                 width: 'unset',
                 maxWidth: '100%',
-                '.MuiTableRow-root': {
-                    backgroundColor: 'background.default',
-                },
+                backgroundColor: 'background.default',
                 boxShadow: 'none',
             }}
         >
@@ -41,23 +36,24 @@ const Coins = ({ handleToast }) => {
                         <TableCell align="left">Coins</TableCell>
                         <TableCell align="right">Symbol</TableCell>
                         <TableCell align="right">Current Price</TableCell>
-                        <TableCell align="right">Balance</TableCell>
+                        <TableCell align="right">Quantity</TableCell>
                         <TableCell align="right">Total Value</TableCell>
                         <TableCell align="right">Profit/Loss</TableCell>
                         <TableCell align="right">Average Price</TableCell>
-                        <TableCell align="right">Total Spent</TableCell>
-                        <TableCell align="right">More</TableCell>
+                        <TableCell align="center">Action</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {portfolio.map((data, index) => (
-                        <Row
-                            key={index}
-                            data={data}
-                            id={index}
-                            handleToast={handleToast}
-                        />
-                    ))}
+                    {handleSearchCoin()
+                        .sort((acc, cur) => cur.totalValue - acc.totalValue)
+                        .map((data, index) => (
+                            <Row
+                                key={index}
+                                data={data}
+                                id={index}
+                                handleToast={handleToast}
+                            />
+                        ))}
                 </TableBody>
             </Table>
         </TableContainer>

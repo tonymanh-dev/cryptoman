@@ -18,6 +18,7 @@ import {
     createTheme,
     CssBaseline,
 } from '@mui/material';
+import CoinTrack from './components/Portfolio/CoinTrack';
 
 export const App = () => {
     const { mode } = useContext(AppContext);
@@ -46,11 +47,15 @@ export const App = () => {
                         <Navbar />
 
                         <Routes>
-                            <Route path="" element={<Market />} />
+                            <Route path="" element={<Dashboard />} />
                             <Route path="/dashboard" element={<Dashboard />} />
                             <Route path="/portfolio" element={<Portfolio />} />
+                            <Route
+                                path="/portfolio/:name"
+                                element={<CoinTrack />}
+                            />
                             <Route path="/market" element={<Market />} />
-                            <Route path="/coins/:id" element={<CoinPage />} />
+                            <Route path="/coin/:id" element={<CoinPage />} />
                             <Route path="/dashboard" element={<Dashboard />} />
                         </Routes>
                     </Container>

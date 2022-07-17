@@ -17,7 +17,6 @@ import {
     Typography,
 } from '@mui/material';
 
-import logo from '../../assets/coingecko.png';
 import { links } from '../../data/data';
 import { BsFillSunFill, BsFillMoonStarsFill } from 'react-icons/bs';
 
@@ -135,10 +134,11 @@ const DrawerMenu = () => {
                                             sx={{
                                                 borderRadius: '30px',
                                                 padding: '6px 16px',
-                                                '&.MuiListItemButton-root:hover': {
-                                                    backgroundColor:
-                                                        'background.paper',
-                                                },
+                                                '&.MuiListItemButton-root:hover':
+                                                    {
+                                                        backgroundColor:
+                                                            'background.paper',
+                                                    },
                                             }}
                                         >
                                             <ListItemIcon
@@ -153,10 +153,11 @@ const DrawerMenu = () => {
                                             <ListItemText
                                                 sx={{
                                                     color: 'text.secondary',
-                                                    '.MuiListItemText-primary': {
-                                                        fontWeight: '500',
-                                                        fontSize: '16px',
-                                                    },
+                                                    '.MuiListItemText-primary':
+                                                        {
+                                                            fontWeight: '500',
+                                                            fontSize: '16px',
+                                                        },
                                                 }}
                                                 primary={item.title}
                                             />

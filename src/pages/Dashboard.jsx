@@ -1,14 +1,12 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { AppContext } from '../services/AppContext';
 
-import { Box, Typography, Breadcrumbs } from '@mui/material';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { Box, Typography } from '@mui/material';
 
 import Statistics from '../components/Dashboard/Statistics';
 import PortfolioStats from '../components/Dashboard/PortfolioStats';
 import Market from '../components/Dashboard/Market';
 import Loader from '../components/Loader';
-import { getBreadcrumbs } from '../components/CardStyled';
 
 const Dashboard = () => {
     const { portfolio } = useContext(AppContext);

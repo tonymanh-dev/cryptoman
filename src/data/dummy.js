@@ -5,8 +5,7 @@ export const myPortfolio = [
             symbol: 'btc',
             current_price: 110000,
 
-            image:
-                'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
+            image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
         },
 
         profit: 88000,
@@ -21,8 +20,7 @@ export const myPortfolio = [
             symbol: 'eth',
             current_price: 6690,
 
-            image:
-                'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
+            image: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
         },
 
         profit: 130109,
@@ -37,8 +35,7 @@ export const myPortfolio = [
             symbol: 'ada',
             current_price: 6.3,
 
-            image:
-                'https://assets.coingecko.com/coins/images/975/large/cardano.png?1547034860',
+            image: 'https://assets.coingecko.com/coins/images/975/large/cardano.png?1547034860',
         },
 
         profit: 30608,
@@ -53,8 +50,7 @@ export const myPortfolio = [
             symbol: 'dot',
             current_price: 380,
 
-            image:
-                'https://assets.coingecko.com/coins/images/12171/thumb/polkadot.png?1639712644',
+            image: 'https://assets.coingecko.com/coins/images/12171/thumb/polkadot.png?1639712644',
         },
 
         profit: 680999,

@@ -8,7 +8,7 @@ import {
     CardContentStyled,
     Subtitle,
     NumberText,
-} from '../CardStyled';
+} from '../MuiCustom';
 import Loader from '../Loader';
 
 const DomStats = () => {
