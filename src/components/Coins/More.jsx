@@ -35,8 +35,8 @@ const More = ({ coin }) => {
         height: '8em',
         background:
             theme.palette.mode === 'light'
-                ? 'linear-gradient(180deg, rgba(255,255,255,0.123) 30%, rgba(255,255,255,0.9) 60%)'
-                : 'linear-gradient(180deg, rgba(0,0,0,0.123) 46%, rgba(18,18,18,0.9) 60%)',
+                ? 'linear-gradient(180deg, rgba(243, 244, 246, 0.1) 30%, rgba(243, 244, 246, 0.9) 60%)'
+                : 'linear-gradient(180deg, rgba(18,18,18 ,.123) 36%, rgba(18,18,18,0.9) 60%)',
     }));
 
     return (

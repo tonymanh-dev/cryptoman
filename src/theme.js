@@ -28,9 +28,10 @@ const customTheme = (mode) => ({
                       hover: '#798BFF',
                   },
 
-                  divider: 'rgba(0, 0, 0, 0.12)',
-                  border: 'rgba(0, 0, 0, 0.12)',
+                  divider: 'rgba(221, 221, 221, 1)',
+                  border: 'rgba(255, 255, 255, 0.12)',
                   gradientBg: 'rgba(255, 255, 255, 0.1)',
+                  coverBg: 'rgba(255, 255, 255, 0.42)',
               }
             : {
                   // palette values for Dark mode
@@ -58,13 +59,16 @@ const customTheme = (mode) => ({
                       selected: '#0ecb81',
                       hover: '#798BFF',
                   },
-                  divider: 'rgba(255, 255, 255, 0.12)',
-                  border: 'rgba(255, 255, 255, 0.12)',
+                  divider: 'rgba(221, 221, 221, 0.2)',
+                  border: 'rgba(0, 0, 0, 0.12)',
+                  coverBg: 'rgba(0, 0, 0, 0.22)',
+
                   gradientBg: 'rgba(18, 18, 18, 0.1)',
               }),
 
         //   Color fixed
-        purpleColor: '#798BFF',
+        purpleCl: '#885df1',
+        blueCl: '#646cff',
         pinkCl: '#ff6385',
         greenCl: '#0ecb81',
 

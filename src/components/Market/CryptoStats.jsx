@@ -4,7 +4,7 @@ import millify from 'millify';
 
 import DomStats from './DomStats';
 import Loader from '../Loader';
-import { numberWithCommas } from '../../pages/Market';
+import { numberWithCommas } from '../../utils/convertNumber';
 
 import { Box, Grid, Typography } from '@mui/material';
 import {
@@ -31,19 +31,19 @@ const CryptoStats = () => {
                 </Typography>
                 <Typography variant="body2">
                     The global cryptocurrency market cap today is
-                    <Subtitle>
+                    <Subtitle sx={{ color: 'primary.main' }}>
                         {' '}
                         {millify(globalStats.totalMarketCap)} USD
                     </Subtitle>
                     , trading volume is{' '}
-                    <Subtitle>
+                    <Subtitle sx={{ color: 'primary.main' }}>
                         {millify(globalStats.total24hVolume)} USD{' '}
                     </Subtitle>
                     in the last 24 hours.
                 </Typography>
             </Box>
             <Grid container spacing={{ xs: 2, md: 2 }}>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} md={3} sx={{ minWidth: '214px' }}>
                     <CardStyled>
                         <CardContentStyled>
                             <Subtitle component="div">
@@ -56,7 +56,7 @@ const CryptoStats = () => {
                         </CardContentStyled>
                     </CardStyled>
                 </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} md={3} sx={{ minWidth: '214px' }}>
                     <CardStyled>
                         <CardContentStyled>
                             <Subtitle component="div">

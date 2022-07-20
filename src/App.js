@@ -19,6 +19,7 @@ import {
     CssBaseline,
 } from '@mui/material';
 import CoinTrack from './components/Portfolio/CoinTrack';
+import Footer from './components/Footer';
 
 export const App = () => {
     const { mode } = useContext(AppContext);
@@ -40,7 +41,6 @@ export const App = () => {
                     <Container
                         maxWidth="xl"
                         sx={{
-                            mt: '64px',
                             backgroundColor: 'background.paper',
                         }}
                     >
@@ -58,6 +58,7 @@ export const App = () => {
                             <Route path="/coin/:id" element={<CoinPage />} />
                             <Route path="/dashboard" element={<Dashboard />} />
                         </Routes>
+                        <Footer />
                     </Container>
                 </Box>
             </ThemeProvider>

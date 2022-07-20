@@ -2,7 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useGetSingleCoinQuery } from '../../services/cryptoApi';
-import { numberWithCommas } from '../../pages/Market';
+import { numberWithCommas } from '../../utils/convertNumber';
+
 import {
     Avatar,
     Box,
@@ -31,30 +32,8 @@ const CoinTrackStats = ({ coinData, coinId }) => {
 
     if (!data) return <Loader />;
 
-    // Get portfolio coin track stats value
-    const balance = coinData
-        .map((coin) => coin.totalValue)
-        .reduce((acc, cur) => acc + cur, 0);
-
-    const totalProfit = coinData
-        .map((coin) => coin.profit)
-        .reduce((acc, cur) => acc + cur, 0);
-
-    const totalCost = coinData
-        .map((coin) => coin.totalCost)
-        .reduce((acc, cur) => acc + cur, 0);
-
-    const holdings = coinData
-        .map((coin) => coin.quantity)
-        .reduce((acc, cur) => acc + cur, 0);
-
-    const averagePrice = coinData
-        .map((coin) => coin.averagePrice)
-        .reduce((acc, cur) => acc + cur, 0);
-
-    const profitPercentage = coinData
-        .map((coin) => coin.profitPercentage)
-        .reduce((acc, cur) => acc + cur, 0);
+    const currentPrice = data.market_data.current_price.usd;
+    const price24h = data.market_data.price_change_percentage_24h;
 
     return (
         <Box sx={{ flexGrow: 1, m: '24px 0' }}>
@@ -88,100 +67,88 @@ const CoinTrackStats = ({ coinData, coinId }) => {
                 </Stack>
                 <Stack direction="row" sx={{ mt: '4px', alignItems: 'center' }}>
                     <Heading variant="h6" sx={{ fontWeight: '600' }}>
-                        $
-                        {numberWithCommas(
-                            data.market_data.current_price.usd.toFixed(2),
-                        )}
+                        ${numberWithCommas(currentPrice.toFixed(2))}
                     </Heading>
                     <Heading
                         variant="h6"
                         sx={{
                             ml: '10px',
                             fontSize: '16px',
-                            color:
-                                data.market_data.price_change_percentage_24h > 0
-                                    ? 'greenCl'
-                                    : 'redCl',
+                            color: price24h > 0 ? 'greenCl' : 'redCl',
                         }}
                     >
-                        {data.market_data.price_change_percentage_24h > 0
-                            ? '+'
-                            : ''}
-                        {data.market_data.price_change_percentage_24h.toFixed(
-                            1,
-                        )}
-                        %
+                        {price24h > 0 ? '+' : ''}
+                        {price24h.toFixed(1)}%
                     </Heading>
                 </Stack>
             </Box>
 
             <Grid container spacing={{ xs: 1, sm: 2 }}>
-                <Grid item xs={12} sm={4} md={2}>
+                <Grid item xs={12} sm={4} md={2.2}>
                     <Card2>
                         <CardContentStyled>
                             <SubtitleCl component="div">Total Value</SubtitleCl>
                             <NumberText>
-                                ${numberWithCommas(balance.toFixed(2))}{' '}
-                                <Typography variant="body2">USD</Typography>
+                                ${numberWithCommas(coinData[0].totalValue)}{' '}
                             </NumberText>
                         </CardContentStyled>
                     </Card2>
                 </Grid>
-                <Grid item xs={12} sm={4} md={2}>
+                <Grid item xs={12} sm={4} md={2.2}>
                     <Card2>
                         <CardContentStyled>
                             <SubtitleCl component="div">Holdings</SubtitleCl>
                             <NumberText>
-                                {numberWithCommas(holdings.toFixed(2))}{' '}
+                                {numberWithCommas(coinData[0].quantity)}{' '}
                             </NumberText>
                         </CardContentStyled>
                     </Card2>
                 </Grid>
 
-                <Grid item xs={12} sm={4} md={2}>
+                <Grid item xs={12} sm={4} md={2.2}>
                     <Card2>
                         <CardContentStyled>
                             <SubtitleCl component="div">Total Cost</SubtitleCl>
                             <NumberText>
-                                ${numberWithCommas(totalCost.toFixed(2))}{' '}
+                                ${numberWithCommas(coinData[0].totalCost)}{' '}
                             </NumberText>
                         </CardContentStyled>
                     </Card2>
                 </Grid>
 
-                <Grid item xs={12} sm={4} md={2}>
+                <Grid item xs={12} sm={6} md={2.2}>
                     <Card2>
                         <CardContentStyled>
                             <SubtitleCl component="div">
                                 Average Price
                             </SubtitleCl>
                             <NumberText>
-                                ${numberWithCommas(averagePrice.toFixed(2))}{' '}
-                                <Typography variant="body2">USD</Typography>
+                                ${numberWithCommas(coinData[0].averagePrice)}{' '}
                             </NumberText>
                         </CardContentStyled>
                     </Card2>
                 </Grid>
 
-                <Grid item xs={12} sm={4} md={3}>
+                <Grid item xs={12} sm={6} md={3} lg={3}>
                     <Card2>
                         <CardContentStyled>
                             <SubtitleCl component="div">Profit/Loss</SubtitleCl>
                             <NumberText>
-                                ${numberWithCommas(totalProfit.toFixed(2))}{' '}
-                                <Typography variant="body2">USD</Typography>
+                                ${numberWithCommas(coinData[0].profit)}{' '}
                                 <Subtitle
                                     sx={{
                                         fontSize: '12px',
                                         ml: '4px',
                                         color:
-                                            profitPercentage > 0
+                                            coinData[0].profitPercentage > 0
                                                 ? 'greenCl'
                                                 : 'redCl',
                                     }}
                                 >
-                                    {profitPercentage > 0 ? '+' : ''}
-                                    {profitPercentage.toFixed(2)}%
+                                    {coinData[0].profitPercentage > 0
+                                        ? '+'
+                                        : ''}
+                                    {coinData[0].profitPercentage}%
                                 </Subtitle>
                             </NumberText>
                         </CardContentStyled>

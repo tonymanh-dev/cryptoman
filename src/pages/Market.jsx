@@ -17,7 +17,6 @@ import {
     Table,
     TableBody,
     Avatar,
-    styled,
     Pagination,
     Breadcrumbs,
     TextField,
@@ -30,18 +29,7 @@ import {
     TextLink,
     TextLink2,
 } from '../components/MuiCustom';
-
-const Container = styled(Box)(({ theme }) => ({
-    [theme.breakpoints.down('lg')]: {
-        marginLeft: '0',
-    },
-}));
-
-export const numberWithCommas = (number) => {
-    if (!number) return '-';
-
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-};
+import { numberWithCommas } from '../utils/convertNumber';
 
 const Market = () => {
     const [page, setPage] = useState(1);
@@ -60,7 +48,7 @@ const Market = () => {
     };
 
     return (
-        <Container sx={{ width: '100%', mt: '10px' }}>
+        <Box sx={{ width: '100%', mt: '10px' }}>
             <Breadcrumbs
                 sx={{ mb: '14px' }}
                 separator={<NavigateNextIcon fontSize="small" />}
@@ -276,7 +264,7 @@ const Market = () => {
                     },
                 }}
             />
-        </Container>
+        </Box>
     );
 };
 

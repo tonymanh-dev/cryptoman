@@ -1,10 +1,13 @@
 import React from 'react';
 import { Button, styled, ListItemButton } from '@mui/material';
 
-const ListItemBtn = ({ children, onClick, selected }) => {
+const ListItemBtn = ({ children, onClick, selected, sidebar }) => {
     const MenuItem = styled(ListItemButton)(({ theme }) => ({
         borderRadius: '30px',
-        padding: '6px 16px',
+        // padding: '6px 16px',
+        padding: sidebar ? '6px 16px' : '10px',
+
+        // justifyContent: 'center',
         '&.MuiListItemButton-root:hover': {
             backgroundColor: theme.palette.background.paper,
             '.MuiListItemText-root': {

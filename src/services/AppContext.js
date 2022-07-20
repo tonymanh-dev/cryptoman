@@ -1,14 +1,17 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { numberWithCommas } from '../pages/Market';
-import { portfolioCoins } from '../data/cryptoApi';
-import { coinTrackInitial } from '../data/data';
+import { numberWithCommas } from '../utils/convertNumber';
+
+import { portfolioCoins } from '../utils/cryptoApiLinks';
+import { coinTrackInitial } from '../utils/data';
 import axios from 'axios';
 
 const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
     const [drawer, setDrawer] = useState(false);
-    const [mode, setMode] = useState('light');
+    const [mode, setMode] = useState('dark');
+    const [sidebar, setSidebar] = useState(false);
+    const [screenSize, setScreenSize] = useState(undefined);
     const [modalTransaction, setModalTransaction] = useState(false);
 
     const [coinTrack, setCoinTrack] = useState(coinTrackInitial);
@@ -42,10 +45,13 @@ const AppProvider = ({ children }) => {
                 ...coin,
                 quantity: quantity,
                 totalCost: totalCost,
-                averagePrice: averagePrice === -Infinity ? 0 : averagePrice,
-                profit: totalProfit,
-                totalValue: totalValue,
-                profitPercentage: profitPercentage,
+                averagePrice:
+                    averagePrice === -Infinity
+                        ? 0
+                        : Number(averagePrice.toFixed(2)),
+                profit: Number(totalProfit.toFixed(2)),
+                totalValue: Number(totalValue.toFixed(2)),
+                profitPercentage: Number(profitPercentage.toFixed(2)),
             };
         });
 
@@ -147,6 +153,10 @@ const AppProvider = ({ children }) => {
                 setCoinTrack,
                 modalTransaction,
                 setModalTransaction,
+                screenSize,
+                setScreenSize,
+                sidebar,
+                setSidebar,
             }}
         >
             {children}

@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { AppContext } from '../../services/AppContext';
+import React, { useState } from 'react';
 
-import { numberWithCommas } from '../../pages/Market';
+import { numberWithCommas } from '../../utils/convertNumber';
 
 import { Box, Grid, Typography } from '@mui/material';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';

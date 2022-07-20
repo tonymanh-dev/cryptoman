@@ -11,6 +11,7 @@ import {
     Typography,
     Paper,
     styled,
+    Stack,
 } from '@mui/material';
 import Badge from '@mui/material/Badge';
 
@@ -22,10 +23,10 @@ import { AppContext } from '../../services/AppContext';
 import NavMenu from './NavMenu';
 
 const Navbar = () => {
-    const { setDrawer, mode, setMode } = useContext(AppContext);
+    const { mode, setMode, sidebar, setSidebar } = useContext(AppContext);
 
     const handleActiveMenu = () => {
-        setDrawer(true);
+        setSidebar(!sidebar);
     };
 
     const handleDarkMode = () => {
@@ -41,87 +42,110 @@ const Navbar = () => {
 
     return (
         <AppBar
-            position="fixed"
             sx={{
+                position: 'relative',
                 minHeight: '64px',
                 backgroundImage: 'none',
                 backgroundColor: 'background.paper',
                 boxShadow: 'none',
                 zIndex: 1000,
-                width: { xs: '100%', lg: 'calc(100% - 220px)' },
             }}
         >
             <Toolbar
                 sx={{
-                    padding: { xs: '0 4px', md: '0 16px', lg: '0 24px' },
+                    padding: { xs: '0' },
                     justifyContent: 'space-between',
                 }}
             >
-                <Box sx={{ display: { xs: 'flex', lg: 'none' } }}>
+                <Box sx={{ display: 'block' }}>
                     <Tooltip title="Menu">
-                        <IconButton onClick={handleActiveMenu}>
-                            <MenuIcon sx={{ height: '36px', width: '36px' }} />
+                        <IconButton
+                            onClick={handleActiveMenu}
+                            sx={{ p: '6px' }}
+                        >
+                            <MenuIcon sx={{ height: '30px', width: '30px' }} />
                         </IconButton>
                     </Tooltip>
                 </Box>
 
-                <Box
+                <Stack
+                    direction="row"
                     sx={{
-                        display: { xs: 'flex', lg: 'none' },
-                        gap: '6px',
-                        pl: '16px',
+                        display: { xs: 'flex', sm: 'none' },
+                        width: { xs: '100%' },
+                        justifyContent: 'center',
                     }}
                 >
-                    <Link to="/dashboard" style={{ textDecoration: 'none' }}>
-                        <Box display="flex" gap="6px" alignItems="center">
-                            <Avatar
-                                style={{ height: '36px', width: '36px' }}
-                                src="https://images.ctfassets.net/q5ulk4bp65r7/1rFQCqoq8hipvVJSKdU3fQ/21ab733af7a8ab404e29b873ffb28348/coinbase-icon2.svg"
-                                alt="Logo"
-                            ></Avatar>
-
-                            <Typography
-                                color="text.primary"
-                                variant="h6"
-                                fontSize="18px"
-                                fontWeight="600"
-                            >
-                                CryptoMan
-                            </Typography>
-                        </Box>
-                    </Link>
-                </Box>
-
-                <Paper
-                    component="form"
-                    sx={{
-                        alignItems: 'center',
-                        maxWidth: 400,
-                        borderRadius: '30px',
-                        flex: '3',
-                        boxShadow: 'none',
-                        display: { xs: 'none', lg: 'flex' },
-                        backgroundColor: 'background.default',
-                        backgroundImage: 'none',
-                    }}
-                >
-                    <IconButton
-                        type="submit"
-                        sx={{ width: '40px', height: '40px', p: '10px' }}
-                        aria-label="search"
-                    >
-                        <BsSearch />
-                    </IconButton>
-                    <InputBase
+                    <Box
                         sx={{
-                            flex: 1,
-                            ml: 1,
-                            fontSize: '14px',
+                            display: { xs: 'flex', sm: 'none' },
+                            gap: '6px',
+                            pl: '16px',
                         }}
-                        placeholder="Search crypto"
-                        inputProps={{ 'aria-label': 'search crypto' }}
-                    />
-                </Paper>
+                    >
+                        <Link
+                            to="/dashboard"
+                            style={{ textDecoration: 'none' }}
+                        >
+                            <Box display="flex" gap="8px" alignItems="center">
+                                <Avatar
+                                    style={{ height: '34px', width: '34px' }}
+                                    src="https://images.ctfassets.net/q5ulk4bp65r7/1rFQCqoq8hipvVJSKdU3fQ/21ab733af7a8ab404e29b873ffb28348/coinbase-icon2.svg"
+                                    alt="Logo"
+                                ></Avatar>
+
+                                <Typography
+                                    color="text.primary"
+                                    variant="h6"
+                                    fontSize="18px"
+                                    fontWeight="600"
+                                >
+                                    CryptoMan
+                                </Typography>
+                            </Box>
+                        </Link>
+                    </Box>
+                </Stack>
+
+                <Stack
+                    direction="row"
+                    sx={{
+                        display: { xs: 'none', sm: 'flex' },
+                        justifyContent: { md: 'center' },
+                        width: '100%',
+                    }}
+                >
+                    <Paper
+                        component="form"
+                        sx={{
+                            alignItems: 'center',
+                            maxWidth: 400,
+                            borderRadius: '30px',
+                            flex: '3',
+                            boxShadow: 'none',
+                            backgroundColor: 'background.default',
+                            backgroundImage: 'none',
+                        }}
+                    >
+                        <IconButton
+                            type="submit"
+                            sx={{ width: '40px', height: '40px', p: '10px' }}
+                            aria-label="search"
+                        >
+                            <BsSearch />
+                        </IconButton>
+                        <InputBase
+                            sx={{
+                                flex: 1,
+                                ml: 1,
+                                fontSize: '14px',
+                                // display: { xs: 'none', md: 'flex' },
+                            }}
+                            placeholder="Search crypto"
+                            inputProps={{ 'aria-label': 'search crypto' }}
+                        />
+                    </Paper>
+                </Stack>
 
                 <Box
                     sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}
@@ -131,7 +155,7 @@ const Navbar = () => {
                             display: {
                                 xs: 'none',
                                 sm: 'flex',
-                                lg: 'none',
+                                md: 'none',
                                 width: '34px',
                                 height: '34px',
                             },

@@ -1,22 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { marketChart } from '../../data/cryptoApi';
-import { chartTimes, modeChart } from '../../data/data';
-import { Box, ButtonGroup, Grid, styled, Typography } from '@mui/material';
+import { marketChart } from '../../utils/cryptoApiLinks';
+import { chartTimes, modeChart } from '../../utils/data';
+import { Box, ButtonGroup, Grid, Typography } from '@mui/material';
 
 import Loader from '../Loader';
+import { BoxChart } from './style';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from 'chart.js';
 import TimeButton from './TimeButton';
 ChartJS.register(...registerables);
-
-const BoxChart = styled(Box)(() => ({
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: 'inherit',
-}));
 
 const Chart = ({ coin, id }) => {
     const [chartData, setChartData] = useState();

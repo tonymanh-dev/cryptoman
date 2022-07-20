@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { numberWithCommas } from '../../pages/Market';
-import { Avatar, Box, Chip, Grid, Button, Stack } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import React from 'react';
+import { numberWithCommas } from '../../utils/convertNumber';
+import { Avatar, Typography, Box, Chip, Grid, Stack } from '@mui/material';
 
 import {
     FaStar,
@@ -10,55 +9,11 @@ import {
     FaCaretDown,
     FaCaretUp,
 } from 'react-icons/fa';
+import { BtnOutline, BorderLinearProgress, ChipStyled } from './style';
 
 import Stats from './Stats';
-import { LinearProgress, linearProgressClasses, styled } from '@mui/material';
 
-const CoinInfo = ({ data, id }) => {
-    const BtnOutline = styled(Button)(({ theme }) => ({
-        fontSize: '18px',
-        marginRight: '4px',
-        padding: '6px 12px',
-        borderColor: theme.palette.divider,
-        borderRadius: '6px',
-        color: theme.palette.text.secondary,
-        '&:hover': {
-            borderColor: theme.palette.primary,
-        },
-    }));
-
-    const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-        height: '8px',
-        width: '70%',
-        [theme.breakpoints.down('md')]: {
-            width: '100%',
-        },
-        borderRadius: 5,
-        alignItems: 'center',
-        margin: '10px 0',
-        '.MuiLinearProgress-barColorPrimary': {
-            backgroundColor: '',
-            backgroundImage: 'linear-gradient(to right, #7e84ff, #9be15d)',
-            // backgroundColor: theme.palette.primary.main,
-            // backgroundImage: 'linear-gradient(to right, #afe15d, #39b385)',
-        },
-        [`&.${linearProgressClasses.colorPrimary}`]: {
-            backgroundColor:
-                theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
-        },
-        [`& .${linearProgressClasses.bar}`]: {
-            backgroundColor:
-                theme.palette.mode === 'light' ? 'primary' : 'secondary',
-        },
-    }));
-
-    const ChipStyled = styled(Chip)(({ theme }) => ({
-        backgroundColor: theme.palette.background.paper,
-        padding: '4px',
-        height: '30px',
-        fontWeight: '500',
-    }));
-
+const CoinInfo = ({ data }) => {
     return (
         <div>
             <Grid
@@ -148,7 +103,7 @@ const CoinInfo = ({ data, id }) => {
                             display: 'flex',
                             alignItems: 'center',
                             gap: '10px',
-                            mt: '10px',
+                            m: '10px',
                         }}
                     >
                         <Typography
@@ -166,8 +121,8 @@ const CoinInfo = ({ data, id }) => {
                         </Typography>
                         <Box
                             sx={{
-                                p: '6px 10px',
-                                borderRadius: '6px',
+                                p: '4px 8px',
+                                borderRadius: '30px',
                             }}
                             backgroundColor={
                                 data.market_data.price_change_percentage_24h > 0
@@ -180,7 +135,6 @@ const CoinInfo = ({ data, id }) => {
                                     display: 'flex',
                                     alignItems: 'center',
                                     fontSize: '14px',
-                                    fontWeight: '500',
                                     color: '#fff',
                                 }}
                             >
@@ -190,7 +144,11 @@ const CoinInfo = ({ data, id }) => {
                                 ) : (
                                     <FaCaretDown />
                                 )}
-                                <Typography>
+                                <Typography
+                                    sx={{
+                                        fontWeight: '500',
+                                    }}
+                                >
                                     {data.market_data.price_change_percentage_24h.toFixed(
                                         2,
                                     )}
@@ -201,7 +159,7 @@ const CoinInfo = ({ data, id }) => {
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                         <BorderLinearProgress
-                            width={{ sm: '100%', md: '70%' }}
+                            width={{ xs: '100%', md: '70%' }}
                             justifycontent={{ md: 'end' }}
                             variant="determinate"
                             value={60}
@@ -212,14 +170,15 @@ const CoinInfo = ({ data, id }) => {
                         sx={{
                             flexGrow: 1,
                             display: 'flex',
-                            justifyContent: 'end',
+                            justifyContent: { xs: 'space-between', sm: 'end' },
                         }}
                     >
                         <Box
-                            width={{ sm: '100%', md: '70%' }}
+                            width={{ xs: '100%', md: '70%' }}
                             sx={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
+                                mb: '14px',
                             }}
                         >
                             <Typography

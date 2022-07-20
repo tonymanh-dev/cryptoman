@@ -9,21 +9,11 @@ import Coins from '../components/Portfolio/Coins';
 import ModalForm from '../components/Portfolio/Modal';
 import Stats from '../components/Portfolio/Stats';
 import Loader from '../components/Loader';
-import {
-    Box,
-    Button,
-    Stack,
-    TextField,
-    Breadcrumbs,
-    Link,
-    Typography,
-} from '@mui/material';
+import { Box, Button, Stack, TextField, Breadcrumbs } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { TextLink, TextLink2 } from '../components/MuiCustom';
 
 const Portfolio = () => {
-    // const [openModal, setOpenModal] = useState(false);
-
     const [search, setSearch] = useState('');
     const { portfolio, modalTransaction, setModalTransaction } =
         useContext(AppContext);

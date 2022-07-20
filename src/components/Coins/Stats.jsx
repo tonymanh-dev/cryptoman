@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { numberWithCommas } from '../../pages/Market';
+import { numberWithCommas } from '../../utils/convertNumber';
+
 import { Box, Grid, Paper, styled, Tooltip, Typography } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGetMarketStatsQuery } from '../../services/cryptoApi';
-import { numberWithCommas } from '../../pages/Market';
+import { numberWithCommas } from '../../utils/convertNumber';
 
 import { Grid, Typography } from '@mui/material';
 import {

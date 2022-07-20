@@ -1,5 +1,5 @@
 import React from 'react';
-import { numberWithCommas } from '../../pages/Market';
+import { numberWithCommas } from '../../utils/convertNumber';
 
 import { Box, Grid, Typography } from '@mui/material';
 import {

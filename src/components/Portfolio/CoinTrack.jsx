@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import { useParams } from 'react-router';
 import { useGetCryptosQuery } from '../../services/cryptoApi';
 
-import { numberWithCommas } from '../../pages/Market';
+import { numberWithCommas } from '../../utils/convertNumber';
+
 import CoinTrackStats from './CoinTrackStats';
 import { Toast, handleToast } from './Toast';
 
@@ -26,6 +27,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { ButtonStyled, SubTable1 } from '../MuiCustom';
 import Loader from '../Loader';
 import ModalForm from './Modal';
+import { id } from 'date-fns/locale';
 
 const HeadTable = [
     'Type',
@@ -47,6 +49,7 @@ const CoinTrack = () => {
 
     const coinTrackStats = portfolio.filter((coin) => coin.name === name);
     const coinId = coinTrackStats.map((coin) => coin.id);
+    console.log(coinTrackStats);
 
     const handleOpenModal = () => {
         setModalTransaction(true);

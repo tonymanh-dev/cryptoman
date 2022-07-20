@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 import SelectBtn from './SelectBtn';
-import { porfolioChart } from '../../data/data';
-import { balanceData } from '../../data/dummy';
+import { porfolioChart } from '../../utils/data';
+import { balanceData } from '../../utils/dummy';
 import { CardStyled, Heading } from './styled';
 import { Box, Grid, CardContent, Stack } from '@mui/material';
 

@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AppContext } from '../../services/AppContext';
-import { numberWithCommas } from '../../pages/Market';
+import { numberWithCommas } from '../../utils/convertNumber';
 
 import Box from '@mui/material/Box';
 import TableCell from '@mui/material/TableCell';

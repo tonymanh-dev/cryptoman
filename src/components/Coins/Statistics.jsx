@@ -1,5 +1,6 @@
 import React from 'react';
-import { numberWithCommas } from '../../pages/Market';
+import { numberWithCommas } from '../../utils/convertNumber';
+
 import {
     Box,
     Paper,
@@ -67,9 +68,17 @@ const Statistics = ({ data }) => {
                         {data.symbol.toUpperCase()} Statistics
                     </Typography>
                     <TableContainer>
-                        <Table arial-label="statistics table">
+                        <Table
+                            arial-label="statistics table"
+                            sx={{
+                                '.MuiTableCell-root': {
+                                    borderBottom: '1px solid',
+                                    borderBottomColor: 'divider',
+                                },
+                            }}
+                        >
                             <TableHead>
-                                <TableRow>
+                                <TableRow hover>
                                     <TableCell sx={{ p: '16px 0' }}>
                                         {data.name} Price Today
                                     </TableCell>
@@ -82,9 +91,10 @@ const Statistics = ({ data }) => {
                                     <TableRow
                                         key={row.label}
                                         sx={{
-                                            '&:last-child td, &:last-child th': {
-                                                border: 0,
-                                            },
+                                            '&:last-child td, &:last-child th':
+                                                {
+                                                    border: 0,
+                                                },
                                         }}
                                     >
                                         <TableCell
