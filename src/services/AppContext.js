@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 import { numberWithCommas } from '../utils/convertNumber';
 
 import { portfolioCoins } from '../utils/cryptoApiLinks';
-import { coinTrackInitial } from '../utils/data';
+import { coinTrackInitial } from '../utils/dummy';
 import axios from 'axios';
 
 const AppContext = createContext();

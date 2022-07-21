@@ -27,7 +27,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { ButtonStyled, SubTable1 } from '../MuiCustom';
 import Loader from '../Loader';
 import ModalForm from './Modal';
-import { id } from 'date-fns/locale';
+import { Subtitle } from '../Dashboard/styled';
 
 const HeadTable = [
     'Type',
@@ -39,9 +39,14 @@ const HeadTable = [
     'Profit',
     'Action',
 ];
-const CoinTrack = () => {
-    const { portfolio, coinTrack, modalTransaction, setModalTransaction } =
-        useContext(AppContext);
+const CoinTrack1 = () => {
+    const {
+        portfolio,
+        coinForm,
+        coinTrack,
+        modalTransaction,
+        setModalTransaction,
+    } = useContext(AppContext);
     const { data } = useGetCryptosQuery(20);
     const { name } = useParams();
 
@@ -49,8 +54,7 @@ const CoinTrack = () => {
 
     const coinTrackStats = portfolio.filter((coin) => coin.name === name);
     const coinId = coinTrackStats.map((coin) => coin.id);
-    // console.log(coinTrackStats);
-    console.log(coinTrack);
+    console.log(coinForm);
 
     const handleOpenModal = () => {
         setModalTransaction(true);
@@ -118,33 +122,27 @@ const CoinTrack = () => {
                         </TableHead>
 
                         <TableBody>
-                            {coinTrack &&
-                                coinTrack
+                            {coinForm &&
+                                coinForm
                                     .filter((coin) => coin.name === name)
-                                    // .sort((acc, cur) => cur.date - acc)
-                                    .map((data, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell align="right">
-                                                <SubTable1
-                                                    sx={{
-                                                        color:
-                                                            data.action ===
-                                                            'BUY'
-                                                                ? 'greenCl'
-                                                                : 'redCl',
-                                                    }}
-                                                >
-                                                    {data.action}
-                                                </SubTable1>
-                                            </TableCell>
-                                            <TableCell align="right">
+                                    .map((data) =>
+                                        data.action.map((acc, i) => (
+                                            <TableRow key={i}>
+                                                <TableCell>
+                                                    <Subtitle>{acc}</Subtitle>
+                                                </TableCell>
+                                            </TableRow>
+                                        )),
+                                    )}
+
+                            {/* <TableCell align="right">
                                                 <SubTable1>
                                                     {numberWithCommas(
                                                         data.price.toFixed(2),
                                                     )}
                                                 </SubTable1>
-                                            </TableCell>
-                                            <TableCell align="right">
+                                            </TableCell> */}
+                            {/* <TableCell align="right">
                                                 <SubTable1
                                                     sx={{
                                                         color:
@@ -177,13 +175,6 @@ const CoinTrack = () => {
                                             </TableCell>
                                             <TableCell align="right">
                                                 <SubTable1>
-                                                    {/* {data.proceeds === true
-                                                        ? numberWithCommas(
-                                                              data.proceeds.toFixed(
-                                                                  2,
-                                                              ),
-                                                          )
-                                                        : 0} */}
                                                     {numberWithCommas(
                                                         data.proceeds,
                                                     )}
@@ -201,12 +192,7 @@ const CoinTrack = () => {
                                                 </SubTable1>
                                             </TableCell>
                                             <TableCell align="right">
-                                                {/* <IconButton
-                                                    size="small"
-                                                    sx={{ p: '2px', mr: '10px' }}
-                                                >
-                                                    <EditIcon />
-                                                </IconButton> */}
+                                            
                                                 <Tooltip title="Delete">
                                                     <IconButton
                                                         size="small"
@@ -220,9 +206,7 @@ const CoinTrack = () => {
                                                         />
                                                     </IconButton>
                                                 </Tooltip>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
+                                            </TableCell> */}
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -231,4 +215,4 @@ const CoinTrack = () => {
     );
 };
 
-export default CoinTrack;
+export default CoinTrack1;

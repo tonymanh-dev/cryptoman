@@ -31,6 +31,7 @@ export const App = () => {
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <Box
+                    maxWidth="xl"
                     sx={{
                         display: 'flex',
                         backgroundColor: 'background.default',
@@ -39,7 +40,7 @@ export const App = () => {
                     <Sidebar />
 
                     <Container
-                        maxWidth="xl"
+                        // maxWidth="xl"
                         sx={{
                             backgroundColor: 'background.paper',
                         }}

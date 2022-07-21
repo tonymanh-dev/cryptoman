@@ -61,36 +61,6 @@ export const myPortfolio = [
     },
 ];
 
-export const movements = [
-    {
-        moveId: '001',
-        symbol: 'BTC',
-        type: 'Buy',
-        quantity: 0.5,
-        price: 29.0,
-        spent: 14.5,
-        time: '2022/June/16',
-    },
-    {
-        moveId: '002',
-        symbol: 'ETH',
-        type: 'Buy',
-        quantity: 0.5,
-        price: 29.0,
-        spent: 14.5,
-        time: '2022/June/18',
-    },
-    {
-        moveId: '003',
-        symbol: 'DOT',
-        type: 'Buy',
-        quantity: 0.5,
-        price: 29.0,
-        spent: 14.5,
-        time: '2022/June/20',
-    },
-];
-
 export const balanceData = [
     { date: 'Jan', value: 2000 },
     { date: 'Fed', value: 10000 },
@@ -103,6 +73,100 @@ export const balanceData = [
     { date: 'Sep', value: 40000 },
     { date: 'Oct', value: 50000 },
     { date: 'Dec', value: 20000 },
+];
+
+export const coinTrackInitial = [
+    {
+        id: 'btc',
+        name: 'Bitcoin',
+        currentPrice: '',
+        date: 'Fri Jul 15 2022',
+        action: 'BUY',
+
+        quantity: 1.63,
+        cost: 15000,
+        price: 20000,
+        proceeds: '',
+        profit: '',
+    },
+    {
+        id: 'btc',
+        name: 'Bitcoin',
+        currentPrice: '',
+        date: 'Mon Jul 19 2022',
+        action: 'BUY',
+
+        quantity: 1.2,
+        cost: 26000,
+        price: 22000,
+        proceeds: '',
+        profit: '',
+    },
+    {
+        id: 'eth',
+        name: 'Ethereum',
+        currentPrice: '',
+        date: 'Mon Jul 19 2022',
+        action: 'BUY',
+
+        quantity: 3,
+        cost: 2800,
+        price: 990,
+        proceeds: '',
+        profit: '',
+    },
+    {
+        id: 'eth',
+        name: 'Ethereum',
+        currentPrice: '',
+        date: 'Tus Jul 20 2022',
+        action: 'BUY',
+
+        quantity: 5,
+        cost: 5000,
+        price: 1000,
+        proceeds: '',
+        profit: '',
+    },
+    {
+        id: 'eth',
+        name: 'Ethereum',
+        currentPrice: '',
+        date: 'Tus Jul 20 2022',
+        action: 'SELL',
+
+        quantity: -3,
+        cost: 0,
+        price: 1200,
+        proceeds: 3500,
+        profit: '',
+    },
+    {
+        id: 'dot',
+        name: 'Polkadot',
+        currentPrice: '',
+        date: 'Fri Jul 18 2022',
+        action: 'BUY',
+
+        quantity: 300,
+        cost: 1800,
+        price: 6,
+        proceeds: 0,
+        profit: '',
+    },
+    {
+        id: 'dot',
+        name: 'Polkadot',
+        currentPrice: '',
+        date: 'Mon Jul 20 2022',
+        action: 'BUY',
+
+        quantity: 500,
+        cost: 2500,
+        price: 5,
+        proceeds: 0,
+        profit: '',
+    },
 ];
 
 // Info

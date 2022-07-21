@@ -18,7 +18,7 @@ const PortfolioStats = ({ getStats }) => {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={{ xs: 2 }}>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} sm={12} md={5} lg={4}>
                     <CardStyled>
                         <CardContentStyled>
                             <Box>
@@ -45,7 +45,7 @@ const PortfolioStats = ({ getStats }) => {
                         </CardContentStyled>
                     </CardStyled>
                 </Grid>
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12} sm={6} md={3.5} lg={4}>
                     <CardStyled>
                         <CardContentStyled>
                             <Box>
@@ -81,7 +81,8 @@ const PortfolioStats = ({ getStats }) => {
                     item
                     xs={12}
                     sm={6}
-                    md={4}
+                    md={3.5}
+                    lg={4}
                     display={{
                         xs: 'none',
                         sm: 'block',

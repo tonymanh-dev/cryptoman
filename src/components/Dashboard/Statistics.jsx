@@ -57,7 +57,16 @@ const Statistics = ({ portfolio, getStats }) => {
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={8}>
                         <CardStyled>
-                            <CardContent sx={{ minHeight: '380px' }}>
+                            <CardContent
+                                sx={{
+                                    minHeight: {
+                                        xs: 'auto',
+                                        md: '430px',
+                                        lg: '470px',
+                                    },
+                                    // maxHeight: '430px',
+                                }}
+                            >
                                 <Stack
                                     direction="row"
                                     justifyContent=" space-between"
@@ -124,7 +133,11 @@ const Statistics = ({ portfolio, getStats }) => {
                         <CardStyled>
                             <CardContent
                                 sx={{
-                                    minHeight: '380px',
+                                    minHeight: {
+                                        xs: 'auto',
+                                        md: '430px',
+                                        lg: '470px',
+                                    },
                                 }}
                             >
                                 <Stack mb="16px">

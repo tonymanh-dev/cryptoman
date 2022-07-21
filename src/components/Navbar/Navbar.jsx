@@ -110,8 +110,8 @@ const Navbar = () => {
                 <Stack
                     direction="row"
                     sx={{
-                        display: { xs: 'none', sm: 'flex' },
-                        justifyContent: { md: 'center' },
+                        display: { xs: 'none', md: 'flex' },
+                        justifyContent: { sm: 'center' },
                         width: '100%',
                     }}
                 >
@@ -119,6 +119,7 @@ const Navbar = () => {
                         component="form"
                         sx={{
                             alignItems: 'center',
+                            justifyContent: 'center',
                             maxWidth: 400,
                             borderRadius: '30px',
                             flex: '3',

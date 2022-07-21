@@ -127,19 +127,3 @@ export const porfolioChart = [
         value: 365,
     },
 ];
-
-export const coinTrackInitial = [
-    {
-        id: 'btc',
-        name: 'Bitcoin',
-        currentPrice: '',
-        date: 'Fri Jul 15 2022',
-        action: 'BUY',
-
-        quantity: 1.63,
-        cost: 15000,
-        price: 20000,
-        proceeds: '',
-        profit: '',
-    },
-];
