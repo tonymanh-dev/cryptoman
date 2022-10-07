@@ -5,9 +5,6 @@ const customTheme = (mode) => ({
             ? {
                   // palette values for Light mode
                   primary: {
-                      //   main: '#0ecb81',
-                      //   main: '#6246ea',
-                      //   main: '#646CFF',
                       main: '#7e84ff',
                   },
                   secondary: {
@@ -20,8 +17,6 @@ const customTheme = (mode) => ({
                   text: {
                       primary: '#212121',
                       secondary: '#374151',
-                      //   primary: '#374151',
-                      //   secondary: '#4a4a4a',
                   },
                   action: {
                       selected: '#0ecb81',
@@ -45,10 +40,6 @@ const customTheme = (mode) => ({
                   background: {
                       default: '#202327',
                       paper: '#121212',
-                      //   default: '#16181c',
-                      //   default: '#14182b',
-                      //   paper: '#20253d',
-                      //   default: '#1e1e1e',
                   },
                   text: {
                       primary: '#fff',
