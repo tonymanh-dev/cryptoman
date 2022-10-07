@@ -167,7 +167,7 @@ const Navbar = () => {
                     </IconButton>
 
                     <Tooltip
-                        title={mode === 'light' ? 'Light mode' : 'Dark mode'}
+                        title={mode === 'dark' ? 'Light mode' : 'Dark mode'}
                         arrow
                     >
                         <IconButton

@@ -35,8 +35,3 @@ export const {
     useGetSingleCoinQuery,
     useGetMarketChartQuery,
 } = cryptoApi;
-
-// https://api.coingecko.com/api/v3coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false
-
-// Market chart
-// https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1

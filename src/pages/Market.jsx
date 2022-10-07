@@ -48,7 +48,7 @@ const Market = () => {
     };
 
     return (
-        <Box sx={{ width: '100%', mt: '10px' }}>
+        <Box sx={{ width: '100%', mt: '10px', mb: '100px' }}>
             <Breadcrumbs
                 sx={{ mb: '14px' }}
                 separator={<NavigateNextIcon fontSize="small" />}

@@ -8,6 +8,9 @@ import Dashboard from './pages/Dashboard';
 import Portfolio from './pages/Portfolio';
 import Market from './pages/Market';
 import CoinPage from './pages/CoinPage';
+import News from './pages/News';
+import Defi from './pages/Defi';
+import Alalytics from './pages/Alalytics';
 
 import Navbar from './components/Navbar/Navbar';
 import Sidebar from './components/SideBar/Sidebar';
@@ -40,7 +43,6 @@ export const App = () => {
                     <Sidebar />
 
                     <Container
-                        // maxWidth="xl"
                         sx={{
                             backgroundColor: 'background.paper',
                         }}
@@ -58,6 +60,9 @@ export const App = () => {
                             <Route path="/market" element={<Market />} />
                             <Route path="/coin/:id" element={<CoinPage />} />
                             <Route path="/dashboard" element={<Dashboard />} />
+                            <Route path="/news" element={<News />} />
+                            <Route path="/defi" element={<Defi />} />
+                            <Route path="/alalytics" element={<Alalytics />} />
                         </Routes>
                         <Footer />
                     </Container>

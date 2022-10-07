@@ -168,28 +168,3 @@ export const coinTrackInitial = [
         profit: '',
     },
 ];
-
-// Info
-// const rank = data.market_cap_rank;
-// const currentPrice = data.market_data.current_price.usd;
-// const totalSupply = data.market_data.total_supply;
-// const marketCap = data.market_data.market_cap.usd;
-// const maxSupply = data.market_data.max_supply;
-// const circulatingSupply = data.market_data.circulating_supply;
-
-// // Statistics
-// const totalVolume = data.market_data.total_volume.usd;
-// const priceChange24h = data.market_data.price_change_24h;
-// const priceChangePer24h = data.market_data.price_change_percentage_24h;
-// const marketCapChange24h = data.market_data.market_cap_change_24h;
-// const marketCapChangePer24h =
-//     data.market_data.market_cap_change_percentage_24h;
-
-// const athPrice = data.market_data.ath.usd;
-// const atlPrice = data.market_data.atl.usd;
-// const athChangePercentage = data.market_data.ath_change_percentage.usd;
-// const atlChangePercentage = data.market_data.atl_change_percentage.usd;
-// const athDate = data.market_data.ath_date.usd;
-// const atlDate = data.market_data.atl_date.usd;
-// const high24h = data.market_data.high_24h.usd;
-// const low24h = data.market_data.low_24h.usd;

@@ -19,8 +19,7 @@ const Footer = () => {
             >
                 <Stack
                     direction="row"
-                    divider={<Divider orientation="vertical" flexItem />}
-                    spacing={1}
+                    spacing={3}
                     sx={{ display: { xs: 'none', sm: 'flex' } }}
                 >
                     {links.map((item) => (
@@ -48,13 +47,14 @@ const Footer = () => {
                 </Stack>
                 <Stack
                     direction="row"
+                    gap={5}
                     sx={{
+                        color: 'text.secondary',
                         p: '24px 0',
                         '.socialIcon': {
                             width: '30px',
                             height: '30px',
                             cursor: 'pointer',
-                            marginRight: '10px',
                             '&.socialIcon:hover': {
                                 color: 'primary.main',
                             },
@@ -70,6 +70,7 @@ const Footer = () => {
                         justifyContent: 'center',
                         alignItems: 'center',
                         mb: '24px',
+                        color: 'text.secondary',
                     }}
                 >
                     <Typography variant="subtitle" fontSize="14px">

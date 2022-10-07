@@ -30,13 +30,12 @@ const Dashboard = () => {
     };
 
     return (
-        <Box flex={1} sx={{ mt: '10px' }}>
+        <Box flex={1} sx={{ mt: '10px', mb: '100px' }}>
             <Typography variant="h6" sx={{ mb: '14px' }}>
                 Dashboard
             </Typography>
             <PortfolioStats portfolio={portfolio} getStats={getStats} />
             <Statistics portfolio={portfolio} getStats={getStats} />
-            <Market />
         </Box>
     );
 };

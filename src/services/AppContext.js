@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { numberWithCommas } from '../utils/convertNumber';
 
 import { portfolioCoins } from '../utils/cryptoApiLinks';
 import { coinTrackInitial } from '../utils/dummy';
@@ -13,17 +12,12 @@ const AppProvider = ({ children }) => {
     const [sidebar, setSidebar] = useState(false);
     const [screenSize, setScreenSize] = useState(undefined);
     const [modalTransaction, setModalTransaction] = useState(false);
-
     const [coinTrack, setCoinTrack] = useState(coinTrackInitial);
 
     const [coinForm, setCoinForm] = useState([]);
     const [portfolio, setPortfolio] = useState([]);
 
-    console.log('Portfolio: ', portfolio);
-    console.log('CoinForm: ', coinForm);
-    console.log(coinTrack);
-
-    //Set data to Portfolio array(Final data to render UI)
+    //Handle data to Portfolio
     useEffect(() => {
         const portfolioData = coinForm.map((coin) => {
             // Calculate value
@@ -40,7 +34,7 @@ const AppProvider = ({ children }) => {
 
             const averagePrice = (totalCost - totalProceeds) / quantity;
 
-            // Return final value to set to portfolio array
+            // Return value and set into portfolio data
             return {
                 ...coin,
                 quantity: quantity,
@@ -62,7 +56,7 @@ const AppProvider = ({ children }) => {
     const fetchMarketChart = async () => {
         const { data } = await axios.get(portfolioCoins(20));
 
-        // Create initial dummy data, just dev environment
+        // Create initial dummy data
         const dummyPortfolio = data
             .filter((coin) => {
                 const name = coin.symbol;

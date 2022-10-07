@@ -44,7 +44,7 @@ const NavMenu = () => {
                         color: 'text.primary',
                     }}
                 >
-                    Tony
+                    Rose
                 </Typography>
             </Button>
 
